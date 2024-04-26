@@ -20,6 +20,12 @@ namespace WindowsFormsApp1
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            /// Run the startup sequence
+            var splashform = new Splashform();
+            splashform.Show();
+
+            /// Run the main program
             Application.Run(new Form1());
         }
     }
