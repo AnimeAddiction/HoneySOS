@@ -24,6 +24,7 @@ namespace WindowsFormsApp1
             /// Run the startup sequence
             var splashform = new Splashform();
             splashform.Show();
+            System.Threading.Thread.Sleep(3000);
 
             /// Run the main program
             Application.Run(new Form1());
