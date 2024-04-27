@@ -15,6 +15,8 @@ namespace WindowsFormsApp1
         public Splashform()
         {
             InitializeComponent();
+            this.WindowState = FormWindowState.Maximized;
+
         }
 
     }

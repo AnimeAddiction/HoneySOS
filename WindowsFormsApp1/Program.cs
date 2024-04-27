@@ -21,13 +21,19 @@ namespace WindowsFormsApp1
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            /// var splashThread = new Thread(() =>
+            ///{
+            ///    Application.Run(new Splashform());
+            ///}
+            ///);
+
             /// Run the startup sequence
-            var splashform = new Splashform();
-            splashform.Show();
-            System.Threading.Thread.Sleep(3000);
+            Application.Run(new Splashform());
+            /// System.Threading.Thread.Sleep(3000);
+            /// splashform.Close();
 
             /// Run the main program
-            Application.Run(new Form1());
+            ///Application.Run(new Form2());
         }
     }
 }
