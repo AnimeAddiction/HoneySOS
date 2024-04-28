@@ -16,7 +16,6 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
-
         }
 
     }
