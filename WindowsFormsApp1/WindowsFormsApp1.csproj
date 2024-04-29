@@ -32,6 +32,19 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <Win32Resource>
+    </Win32Resource>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>
+    </ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup />
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -121,6 +134,8 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Bee.ico" />
+    <Content Include="Resources\Bee.ico" />
     <Content Include="Resources\Startup ver 3.gif" />
     <None Include="Resources\Startup ver 31.gif" />
     <Content Include="Resources\Startup ver 4.gif" />
