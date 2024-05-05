@@ -132,6 +132,8 @@
   <ItemGroup>
     <Content Include="Resources\Startup ver 3.gif" />
     <None Include="Resources\Startup ver 31.gif" />
+    <Content Include="Resources\Startup ver 4.gif" />
+    <None Include="Resources\Startup ver 41.gif" />
     <Content Include="Resources\Startup.mkv" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
