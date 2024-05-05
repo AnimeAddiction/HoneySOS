@@ -10,16 +10,11 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApp1
 {
-    public partial class Splashform : Form
+    public partial class SchedulingPolicy : Form
     {
-        public Splashform()
+        public SchedulingPolicy()
         {
             InitializeComponent();
-            this.WindowState = FormWindowState.Maximized;
-
-
- master
         }
-
     }
 }
