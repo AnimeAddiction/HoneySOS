@@ -18,8 +18,11 @@ namespace WindowsFormsApp1
             this.WindowState = FormWindowState.Maximized;
 
 
- master
         }
 
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
