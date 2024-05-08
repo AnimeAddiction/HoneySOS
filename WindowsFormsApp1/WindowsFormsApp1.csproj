@@ -145,6 +145,26 @@
   <ItemGroup>
     <Content Include="Bee.ico" />
     <Content Include="Resources\Bee.ico" />
+    <None Include="Resources\icons8-logout-24.png" />
+    <None Include="Resources\icons8-logout-24 %281%29.png" />
+    <None Include="Resources\icons8-logout-30.png" />
+    <None Include="Resources\icons8-honey-comb-50.png" />
+    <None Include="Resources\Honey OS %284%29.png" />
+    <None Include="Resources\icons8-notepad-30.png" />
+    <None Include="Resources\icons8-save-16.png" />
+    <None Include="Resources\icons8-save-30 %281%29.png" />
+    <None Include="Resources\icons8-save-as-30 %281%29.png" />
+    <None Include="Resources\icons8-open-file-30.png" />
+    <None Include="Resources\icons8-add-file-30.png" />
+    <None Include="Resources\icons8-undo-30.png" />
+    <None Include="Resources\icons8-redo-30.png" />
+    <None Include="Resources\icons8-undo-30 %281%29.png" />
+    <None Include="Resources\Image1.png" />
+    <None Include="icons8-close-16.png" />
+    <None Include="Resources\icons8-close-24.png" />
+    <None Include="Resources\icons8-close-241.png" />
+    <None Include="Resources\icons8-close-10.png" />
+    <None Include="Resources\icons8-close-10 %281%29.png" />
     <Content Include="Resources\Startup ver 3.gif" />
     <None Include="Resources\Startup ver 31.gif" />
     <Content Include="Resources\Startup ver 4.gif" />

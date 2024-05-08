@@ -32,7 +32,7 @@ namespace WindowsFormsApp1
 
             var mainThread = new Thread(() =>
             {
-                Application.Run(new Form1());
+                Application.Run(new desktop());
             }
             );
             mainThread.Start();
