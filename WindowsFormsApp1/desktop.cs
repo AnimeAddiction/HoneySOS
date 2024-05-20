@@ -106,7 +106,7 @@ namespace WindowsFormsApp1
         private void pictureBox1_Click_1(object sender, EventArgs e)
         {
             // Create an instance of Form2
-            Form2 form2 = new Form2();
+            notepad form2 = new notepad();
 
             // Show Form2
             form2.Show();

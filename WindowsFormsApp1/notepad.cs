@@ -12,7 +12,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
 
 namespace WindowsFormsApp1
 {
-    public partial class Form2 : Form
+    public partial class notepad : Form
     {
         private Point _imageLocation = new Point(13, 5);
         private Point _imgHitArea = new Point(13, 2);
@@ -21,7 +21,7 @@ namespace WindowsFormsApp1
         private bool isCloseButtonHovered = false;
         private int hoveredTabIndex = -1;
 
-        public Form2()
+        public notepad()
         {
             InitializeComponent();
             tabControl1.TabPages.RemoveAt(0);
