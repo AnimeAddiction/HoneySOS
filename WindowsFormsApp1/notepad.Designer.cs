@@ -28,11 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            //this.panel1 = new System.Windows.Forms.Panel();
+            //this.button6 = new System.Windows.Forms.Button();
+            //this.button5 = new System.Windows.Forms.Button();
+            //this.button4 = new System.Windows.Forms.Button();
+            //this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();

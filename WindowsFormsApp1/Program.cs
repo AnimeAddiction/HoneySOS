@@ -17,7 +17,10 @@ namespace WindowsFormsApp1
             Application.Run(splashForm);
 
             // After the splash screen is closed, start the main form on the main UI thread
-            Application.Run(new desktop());
+            //Application.Run(new desktop());
+
+            // This is a test for the voice thing
+            Application.Run(new Form1());
         }
     }
 }
