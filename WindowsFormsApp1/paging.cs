@@ -18,6 +18,7 @@ namespace WindowsFormsApp1
             InitializeDataGridView();
             InitializeDataGridView2();
             InitializeDataGridView3();
+
         }
 
         public void UpdateDataGrid(int[] frames)
@@ -126,6 +127,7 @@ namespace WindowsFormsApp1
 
             // Subscribe to the SelectionChanged event
             dataGridView1.SelectionChanged += DataGridView1_SelectionChanged;
+
         }
 
         private void InitializeDataGridView2()
@@ -133,17 +135,24 @@ namespace WindowsFormsApp1
             dataGridView2.AutoGenerateColumns = false;
             dataGridView2.RowHeadersVisible = false; // Hide row headers
 
+            // Set the header style
+            dataGridView2.ColumnHeadersDefaultCellStyle.BackColor = Color.LightBlue;
+            dataGridView2.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
+            dataGridView2.EnableHeadersVisualStyles = false;
+            // Set a consistent row height
+            dataGridView2.RowTemplate.Height = 30;
+
             // Configure the DataGridView columns
             DataGridViewTextBoxColumn pageNumberColumn = new DataGridViewTextBoxColumn
             {
-                HeaderText = "Page Number",
+                HeaderText = "Page No.",
                 DataPropertyName = "PageNumber"
             };
             dataGridView2.Columns.Add(pageNumberColumn);
 
             DataGridViewTextBoxColumn frameNumberColumn = new DataGridViewTextBoxColumn
             {
-                HeaderText = "Frame Number",
+                HeaderText = "Frame No.",
                 DataPropertyName = "FrameNumber"
             };
             dataGridView2.Columns.Add(frameNumberColumn);
@@ -159,10 +168,18 @@ namespace WindowsFormsApp1
             dataGridView2.SelectionChanged += DataGridView2_SelectionChanged;
         }
 
+
         private void InitializeDataGridView3()
         {
             dataGridView3.AutoGenerateColumns = false;
             dataGridView3.RowHeadersVisible = false; // Hide row headers
+
+            // Set the header style
+            dataGridView3.ColumnHeadersDefaultCellStyle.BackColor = Color.LightBlue;
+            dataGridView3.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
+            dataGridView3.EnableHeadersVisualStyles = false;
+            // Set a consistent row height
+            dataGridView3.RowTemplate.Height = 30;
 
             // Configure the DataGridView columns
             DataGridViewTextBoxColumn queueTypeColumn = new DataGridViewTextBoxColumn
@@ -189,6 +206,7 @@ namespace WindowsFormsApp1
             // Subscribe to the SelectionChanged event
             dataGridView3.SelectionChanged += DataGridView3_SelectionChanged;
         }
+
 
         private void DataGridView1_SelectionChanged(object sender, EventArgs e)
         {
@@ -218,6 +236,11 @@ namespace WindowsFormsApp1
         }
 
         private void dataGridView3_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+        }
+
+  
+        private void pictureBox1_Click(object sender, EventArgs e)
         {
 
         }

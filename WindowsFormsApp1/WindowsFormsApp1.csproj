@@ -78,6 +78,7 @@
     <Compile Include="paging.Designer.cs">
       <DependentUpon>paging.cs</DependentUpon>
     </Compile>
+    <Compile Include="RoundedPanel.cs" />
     <Compile Include="SchedulingPolicy.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -155,6 +156,12 @@
   <ItemGroup>
     <Content Include="Bee.ico" />
     <Content Include="Resources\Bee.ico" />
+    <None Include="Resources\WidgetDate %287%29.png" />
+    <None Include="Resources\WidgetDate %286%29.png" />
+    <None Include="Resources\WidgetDate %285%29.png" />
+    <None Include="Resources\WidgetDate %284%29.png" />
+    <None Include="Resources\WidgetDate %283%29.png" />
+    <None Include="Resources\WidgetDate.png" />
     <None Include="Resources\icons8-logout-24.png" />
     <None Include="Resources\icons8-logout-24 %281%29.png" />
     <None Include="Resources\icons8-logout-30.png" />
@@ -177,6 +184,13 @@
     <None Include="Resources\icons8-close-10 %281%29.png" />
     <None Include="Resources\Group 102.png" />
     <None Include="Resources\Group 102 %281%29.png" />
+    <None Include="Resources\image 7.png" />
+    <None Include="Resources\Rectangle 1686.png" />
+    <None Include="Resources\Group 109.png" />
+    <None Include="Resources\Group 110.png" />
+    <None Include="Resources\Group 112.png" />
+    <None Include="Resources\Simulation of Memory Management.png" />
+    <None Include="Resources\Simulation of the Scheduling Policies.png" />
     <Content Include="Resources\Startup ver 3.gif" />
     <None Include="Resources\Startup ver 31.gif" />
     <Content Include="Resources\Startup ver 4.gif" />
