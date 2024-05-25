@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MemoryManager.cs" />
     <Compile Include="desktop.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -70,6 +71,12 @@
     </Compile>
     <Compile Include="notepad.Designer.cs">
       <DependentUpon>notepad.cs</DependentUpon>
+    </Compile>
+    <Compile Include="paging.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="paging.Designer.cs">
+      <DependentUpon>paging.cs</DependentUpon>
     </Compile>
     <Compile Include="SchedulingPolicy.cs">
       <SubType>Form</SubType>
@@ -90,6 +97,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="notepad.resx">
       <DependentUpon>notepad.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="paging.resx">
+      <DependentUpon>paging.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SchedulingPolicy.resx">
       <DependentUpon>SchedulingPolicy.cs</DependentUpon>
@@ -165,6 +175,8 @@
     <None Include="Resources\icons8-close-241.png" />
     <None Include="Resources\icons8-close-10.png" />
     <None Include="Resources\icons8-close-10 %281%29.png" />
+    <None Include="Resources\Group 102.png" />
+    <None Include="Resources\Group 102 %281%29.png" />
     <Content Include="Resources\Startup ver 3.gif" />
     <None Include="Resources\Startup ver 31.gif" />
     <Content Include="Resources\Startup ver 4.gif" />
