@@ -3,7 +3,7 @@ using System.Threading;
 using System.Windows.Forms;
 using WindowsFormsApp1;
 
-internal static class Program
+public partial class Program
 {
     [STAThread]
     static void Main()
@@ -13,15 +13,14 @@ internal static class Program
 
         // Create and initialize the paging form
         paging page = new paging();
-   
 
-        // Run the paging form
-        Thread pageThread = new Thread(() => Application.Run(page));
-        pageThread.Start();
+        // Show the paging form
+        page.Show();
 
         // Initialize the MemoryManager with the paging form
         MemoryManager mm = new MemoryManager(64, 4, page);
 
+        // Perform memory management operations as needed
         mm.AllocateMemory(1, 10);
         mm.VisualizeMemory();
         Delay(2000); // Delay for 2 seconds
@@ -42,8 +41,8 @@ internal static class Program
         mm.VisualizeMemory();
         Delay(2000); // Delay for 2 seconds
 
-        // Join the page thread to wait for it to finish
-        pageThread.Join();
+        // Start the message loop on the UI thread
+        Application.Run();
     }
 
     // Method to introduce delay

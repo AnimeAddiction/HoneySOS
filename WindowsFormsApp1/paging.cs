@@ -20,12 +20,6 @@ namespace WindowsFormsApp1
 
         public void UpdateDataGrid(int[] frames)
         {
-            if (dataGridView1.InvokeRequired)
-            {
-                dataGridView1.BeginInvoke((MethodInvoker)(() => UpdateDataGrid(frames)));
-                return;
-            }
-
             ImageTextList = new List<ImageTextObject>();
 
             for (int i = 0; i < frames.Length; i++)
