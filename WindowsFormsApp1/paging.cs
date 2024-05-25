@@ -14,8 +14,7 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
             InitializeDataGridView();
-            string imagePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\Resources\\Group 102 (1).png");
-            image1 = Image.FromFile(imagePath);
+            
         }
 
         public void UpdateDataGrid(int[] frames)
@@ -36,8 +35,44 @@ namespace WindowsFormsApp1
 
             dataGridView1.DataSource = null; // Reset the data source
             dataGridView1.DataSource = ImageTextList; // Set the new data source
+
+            // Manually trigger cell formatting for each cell
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                for (int j = 0; j < dataGridView1.Columns.Count; j++)
+                {
+                    FormatCell(i, j);
+                }
+            }
+
             dataGridView1.Refresh();
         }
+
+        private void FormatCell(int rowIndex, int columnIndex)
+        {
+            if (columnIndex == 0) // Assuming the first column holds the ImageTextObject
+            {
+                ImageTextObject imageTextObject = (ImageTextObject)dataGridView1.Rows[rowIndex].DataBoundItem;
+
+                // Check if the cell value is "FREE"
+                if (imageTextObject.Text == "FREE")
+                {
+                    // Set the cell's background color to green
+                    dataGridView1.Rows[rowIndex].Cells[columnIndex].Style.BackColor = Color.LightGreen;
+                }
+                else
+                {
+                    // Set the cell's background color to red
+                    dataGridView1.Rows[rowIndex].Cells[columnIndex].Style.BackColor = Color.Red;
+                }
+            }
+        }
+
+        private void DataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            FormatCell(e.RowIndex, e.ColumnIndex);
+        }
+
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -51,57 +86,32 @@ namespace WindowsFormsApp1
         private void InitializeDataGridView()
         {
             dataGridView1.AutoGenerateColumns = false;
+            dataGridView1.RowHeadersVisible = false; // Hide row headers
+            dataGridView1.ColumnHeadersVisible = false;  // Hide column headers
 
             // Configure the DataGridView columns
             DataGridViewTextBoxColumn imageTextColumn = new DataGridViewTextBoxColumn
             {
-                HeaderText = "Image and Text",
                 DataPropertyName = "Text" // This can be any property; the drawing will be handled in CellPainting
             };
-
             dataGridView1.Columns.Add(imageTextColumn);
 
-            // Configure the DataGridView to use custom cell painting
-            //dataGridView1.CellPainting += new DataGridViewCellPaintingEventHandler(dataGridView1_CellPainting);
+            // Subscribe to the SelectionChanged event
+            dataGridView1.SelectionChanged += DataGridView1_SelectionChanged;
         }
 
-        private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        private void DataGridView1_SelectionChanged(object sender, EventArgs e)
         {
-            if (e.RowIndex >= 0 && e.ColumnIndex == 0) // Assuming the first column holds the ImageTextObject
-            {
-                e.Handled = true;
-                e.PaintBackground(e.CellBounds, true);
-
-                ImageTextObject imageTextObject = (ImageTextObject)dataGridView1.Rows[e.RowIndex].DataBoundItem;
-
-                // Create a new bitmap to combine image and text
-                Bitmap combinedImage = new Bitmap(imageTextObject.Image.Width, imageTextObject.Image.Height);
-                using (Graphics g = Graphics.FromImage(combinedImage))
-                {
-                    // Draw the original image
-                    g.DrawImage(imageTextObject.Image, 0, 0);
-
-                    // Draw the text inside the image
-                    Font font = e.CellStyle.Font;
-                    Brush brush = new SolidBrush(e.CellStyle.ForeColor);
-                    SizeF textSize = g.MeasureString(imageTextObject.Text, font);
-                    PointF textPosition = new PointF(
-                        (combinedImage.Width - textSize.Width) / 2,
-                        (combinedImage.Height - textSize.Height) / 2);
-                    g.DrawString(imageTextObject.Text, font, brush, textPosition);
-                }
-
-                // Draw the combined image in the cell
-                e.Graphics.DrawImage(combinedImage, e.CellBounds.Left + 5, e.CellBounds.Top + 5, combinedImage.Width, combinedImage.Height);
-            }
+            // Clear the selection to remove the blue color indicating an active cell
+            dataGridView1.ClearSelection();
         }
+
 
         private void paging_Load(object sender, EventArgs e)
         {
             // Any additional initialization code
         }
     }
-
     public class ImageTextObject
     {
         public Image Image { get; set; }

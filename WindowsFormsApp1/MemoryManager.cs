@@ -74,7 +74,7 @@ namespace WindowsFormsApp1
                     freedMemory += pageSize;
                 }
             }
-
+            
             freeMemory += freedMemory;
             readyQueue.Remove(processId);
             Console.WriteLine($"Deallocated memory from Process {processId}, freed {freedMemory} memory.");
