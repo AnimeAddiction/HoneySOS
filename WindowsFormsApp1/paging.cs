@@ -8,97 +8,241 @@ namespace WindowsFormsApp1
     public partial class paging : Form
     {
         private List<ImageTextObject> ImageTextList;
+        private List<PageFrameInfo> PageFrameList;
+        private List<QueueInfo> QueueInfoList;
         private Image image1;
 
         public paging()
         {
             InitializeComponent();
             InitializeDataGridView();
-            string imagePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\Resources\\Group 102 (1).png");
-            image1 = Image.FromFile(imagePath);
+            InitializeDataGridView2();
+            InitializeDataGridView3();
+
         }
 
         public void UpdateDataGrid(int[] frames)
         {
             ImageTextList = new List<ImageTextObject>();
+            PageFrameList = new List<PageFrameInfo>();
 
             for (int i = 0; i < frames.Length; i++)
             {
                 if (frames[i] == -1)
                 {
                     ImageTextList.Add(new ImageTextObject(image1, "FREE"));
+                    PageFrameList.Add(new PageFrameInfo { PageNumber = i, FrameNumber = "N/A", InMemory = false });
                 }
                 else
                 {
                     ImageTextList.Add(new ImageTextObject(image1, frames[i].ToString()));
+                    PageFrameList.Add(new PageFrameInfo { PageNumber = i, FrameNumber = frames[i].ToString(), InMemory = true });
                 }
             }
 
             dataGridView1.DataSource = null; // Reset the data source
             dataGridView1.DataSource = ImageTextList; // Set the new data source
+
+            dataGridView2.DataSource = null; // Reset the data source
+            dataGridView2.DataSource = PageFrameList; // Set the new data source
+
+            // Manually trigger cell formatting for each cell
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                for (int j = 0; j < dataGridView1.Columns.Count; j++)
+                {
+                    FormatCell(i, j);
+                }
+            }
+
             dataGridView1.Refresh();
+            dataGridView2.Refresh();
+        }
+
+        public void UpdateQueueGrid(Queue<(int processId, int memorySize)> jobQueue, List<int> readyQueue)
+        {
+            QueueInfoList = new List<QueueInfo>();
+
+            foreach (var job in jobQueue)
+            {
+                QueueInfoList.Add(new QueueInfo { QueueType = "Job Queue", ProcessId = job.processId, MemorySize = job.memorySize });
+            }
+
+            foreach (var processId in readyQueue)
+            {
+                QueueInfoList.Add(new QueueInfo { QueueType = "Ready Queue", ProcessId = processId, MemorySize = 0 }); // Assuming memory size is not needed for ready queue
+            }
+
+            dataGridView3.DataSource = null; // Reset the data source
+            dataGridView3.DataSource = QueueInfoList; // Set the new data source
+
+            dataGridView3.Refresh();
+        }
+
+        private void FormatCell(int rowIndex, int columnIndex)
+        {
+            if (columnIndex == 0) // Assuming the first column holds the ImageTextObject
+            {
+                ImageTextObject imageTextObject = (ImageTextObject)dataGridView1.Rows[rowIndex].DataBoundItem;
+
+                // Check if the cell value is "FREE"
+                if (imageTextObject.Text == "FREE")
+                {
+                    // Set the cell's background color to green
+                    dataGridView1.Rows[rowIndex].Cells[columnIndex].Style.BackColor = Color.LightGreen;
+                }
+                else
+                {
+                    // Set the cell's background color to red
+                    dataGridView1.Rows[rowIndex].Cells[columnIndex].Style.BackColor = Color.Red;
+                }
+            }
+        }
+
+        private void DataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            FormatCell(e.RowIndex, e.ColumnIndex);
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
-
         }
+
         private void InitializeDataGridView()
         {
             dataGridView1.AutoGenerateColumns = false;
+            dataGridView1.RowHeadersVisible = false; // Hide row headers
+            dataGridView1.ColumnHeadersVisible = false; // Hide column headers
 
             // Configure the DataGridView columns
             DataGridViewTextBoxColumn imageTextColumn = new DataGridViewTextBoxColumn
             {
-                HeaderText = "Image and Text",
                 DataPropertyName = "Text" // This can be any property; the drawing will be handled in CellPainting
             };
-
             dataGridView1.Columns.Add(imageTextColumn);
 
-            // Configure the DataGridView to use custom cell painting
-            //dataGridView1.CellPainting += new DataGridViewCellPaintingEventHandler(dataGridView1_CellPainting);
+            // Subscribe to the SelectionChanged event
+            dataGridView1.SelectionChanged += DataGridView1_SelectionChanged;
+
         }
 
-        private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        private void InitializeDataGridView2()
         {
-            if (e.RowIndex >= 0 && e.ColumnIndex == 0) // Assuming the first column holds the ImageTextObject
+            dataGridView2.AutoGenerateColumns = false;
+            dataGridView2.RowHeadersVisible = false; // Hide row headers
+
+            // Set the header style
+            dataGridView2.ColumnHeadersDefaultCellStyle.BackColor = Color.LightBlue;
+            dataGridView2.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
+            dataGridView2.EnableHeadersVisualStyles = false;
+            // Set a consistent row height
+            dataGridView2.RowTemplate.Height = 30;
+
+            // Configure the DataGridView columns
+            DataGridViewTextBoxColumn pageNumberColumn = new DataGridViewTextBoxColumn
             {
-                e.Handled = true;
-                e.PaintBackground(e.CellBounds, true);
+                HeaderText = "Page No.",
+                DataPropertyName = "PageNumber"
+            };
+            dataGridView2.Columns.Add(pageNumberColumn);
 
-                ImageTextObject imageTextObject = (ImageTextObject)dataGridView1.Rows[e.RowIndex].DataBoundItem;
+            DataGridViewTextBoxColumn frameNumberColumn = new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Frame No.",
+                DataPropertyName = "FrameNumber"
+            };
+            dataGridView2.Columns.Add(frameNumberColumn);
 
-                // Create a new bitmap to combine image and text
-                Bitmap combinedImage = new Bitmap(imageTextObject.Image.Width, imageTextObject.Image.Height);
-                using (Graphics g = Graphics.FromImage(combinedImage))
-                {
-                    // Draw the original image
-                    g.DrawImage(imageTextObject.Image, 0, 0);
+            DataGridViewTextBoxColumn inMemoryColumn = new DataGridViewTextBoxColumn
+            {
+                HeaderText = "In Memory",
+                DataPropertyName = "InMemory"
+            };
+            dataGridView2.Columns.Add(inMemoryColumn);
 
-                    // Draw the text inside the image
-                    Font font = e.CellStyle.Font;
-                    Brush brush = new SolidBrush(e.CellStyle.ForeColor);
-                    SizeF textSize = g.MeasureString(imageTextObject.Text, font);
-                    PointF textPosition = new PointF(
-                        (combinedImage.Width - textSize.Width) / 2,
-                        (combinedImage.Height - textSize.Height) / 2);
-                    g.DrawString(imageTextObject.Text, font, brush, textPosition);
-                }
+            // Subscribe to the SelectionChanged event
+            dataGridView2.SelectionChanged += DataGridView2_SelectionChanged;
+        }
 
-                // Draw the combined image in the cell
-                e.Graphics.DrawImage(combinedImage, e.CellBounds.Left + 5, e.CellBounds.Top + 5, combinedImage.Width, combinedImage.Height);
-            }
+
+        private void InitializeDataGridView3()
+        {
+            dataGridView3.AutoGenerateColumns = false;
+            dataGridView3.RowHeadersVisible = false; // Hide row headers
+
+            // Set the header style
+            dataGridView3.ColumnHeadersDefaultCellStyle.BackColor = Color.LightBlue;
+            dataGridView3.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
+            dataGridView3.EnableHeadersVisualStyles = false;
+            // Set a consistent row height
+            dataGridView3.RowTemplate.Height = 30;
+
+            // Configure the DataGridView columns
+            DataGridViewTextBoxColumn queueTypeColumn = new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Queue Type",
+                DataPropertyName = "QueueType"
+            };
+            dataGridView3.Columns.Add(queueTypeColumn);
+
+            DataGridViewTextBoxColumn processIdColumn = new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Process ID",
+                DataPropertyName = "ProcessId"
+            };
+            dataGridView3.Columns.Add(processIdColumn);
+
+            DataGridViewTextBoxColumn memorySizeColumn = new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Memory Size",
+                DataPropertyName = "MemorySize"
+            };
+            dataGridView3.Columns.Add(memorySizeColumn);
+
+            // Subscribe to the SelectionChanged event
+            dataGridView3.SelectionChanged += DataGridView3_SelectionChanged;
+        }
+
+
+        private void DataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            // Clear the selection to remove the blue color indicating an active cell
+            dataGridView1.ClearSelection();
+        }
+
+        private void DataGridView2_SelectionChanged(object sender, EventArgs e)
+        {
+            // Clear the selection to remove the blue color indicating an active cell
+            dataGridView2.ClearSelection();
+        }
+
+        private void DataGridView3_SelectionChanged(object sender, EventArgs e)
+        {
+            // Clear the selection to remove the blue color indicating an active cell
+            dataGridView3.ClearSelection();
         }
 
         private void paging_Load(object sender, EventArgs e)
         {
             // Any additional initialization code
+        }
+
+        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+        }
+
+        private void dataGridView3_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+        }
+
+  
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 
@@ -112,5 +256,19 @@ namespace WindowsFormsApp1
             Image = image;
             Text = text;
         }
+    }
+
+    public class PageFrameInfo
+    {
+        public int PageNumber { get; set; }
+        public string FrameNumber { get; set; }
+        public bool InMemory { get; set; }
+    }
+
+    public class QueueInfo
+    {
+        public string QueueType { get; set; }
+        public int ProcessId { get; set; }
+        public int MemorySize { get; set; }
     }
 }

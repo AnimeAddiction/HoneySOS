@@ -37,6 +37,19 @@ public partial class Program
         mm.VisualizeMemory();
         Delay(2000); // Delay for 2 seconds
 
+        mm.AllocateMemory(4, 15);
+        mm.VisualizeMemory();
+        Delay(2000); // Delay for 2 seconds
+
+        mm.AllocateMemory(5, 15);
+        mm.VisualizeMemory();
+        Delay(2000); // Delay for 2 seconds
+
+        mm.AllocateMemory(6, 15);
+        mm.VisualizeMemory();
+        Delay(2000); // Delay for 2 seconds
+
+
         mm.DeallocateMemory(2);
         mm.VisualizeMemory();
         Delay(2000); // Delay for 2 seconds
