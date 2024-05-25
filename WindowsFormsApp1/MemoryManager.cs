@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace WindowsFormsApp1
@@ -10,9 +11,9 @@ namespace WindowsFormsApp1
         private int pageSize;
         private int freeMemory;
         private int[] frames;
-        private Queue<(int processId, int memorySize)> jobQueue;
-        private List<int> readyQueue;
-        private readonly paging page;
+        private Queue<(int processId, int memorySize)> jobQueue;  // Job queue
+        private List<int> readyQueue;  // Ready queue
+        private paging page;
 
         public MemoryManager(int totalMemory, int pageSize, paging page)
         {
@@ -21,22 +22,20 @@ namespace WindowsFormsApp1
             this.freeMemory = totalMemory;
             this.frames = new int[totalMemory / pageSize];
 
-            // Initialize the paging form
-            this.page = page;
-
-            // Manual array fill to set all frames to -1 indicating they are free
+            // Initialize all frames to -1 indicating they are free
             for (int i = 0; i < frames.Length; i++)
             {
                 frames[i] = -1;
             }
 
-            this.jobQueue = new Queue<(int processId, int memorySize)>();
-            this.readyQueue = new List<int>();
+            this.jobQueue = new Queue<(int processId, int memorySize)>();  // Initialize job queue
+            this.readyQueue = new List<int>();  // Initialize ready queue
+            this.page = page;
         }
 
         public bool AllocateMemory(int processId, int memorySize)
         {
-            int numPages = (memorySize + -1) / pageSize;
+            int numPages = (memorySize + pageSize - 1) / pageSize;
             if (freeMemory >= memorySize)
             {
                 List<int> allocatedPages = new List<int>();
@@ -52,13 +51,15 @@ namespace WindowsFormsApp1
                 if (allocatedPages.Count == numPages)
                 {
                     freeMemory -= memorySize;
-                    readyQueue.Add(processId);
+                    readyQueue.Add(processId);  // Add to ready queue
+                    UpdateQueues(); // Update the display of queues
                     Console.WriteLine($"Allocated {memorySize} memory to Process {processId}");
                     return true;
                 }
             }
 
-            jobQueue.Enqueue((processId, memorySize));
+            jobQueue.Enqueue((processId, memorySize));  // Add to job queue
+            UpdateQueues(); // Update the display of queues
             Console.WriteLine($"Process {processId} added to job queue due to insufficient memory.");
             return false;
         }
@@ -74,9 +75,10 @@ namespace WindowsFormsApp1
                     freedMemory += pageSize;
                 }
             }
-            
+
             freeMemory += freedMemory;
-            readyQueue.Remove(processId);
+            readyQueue.Remove(processId);  // Remove from ready queue
+            UpdateQueues(); // Update the display of queues
             Console.WriteLine($"Deallocated memory from Process {processId}, freed {freedMemory} memory.");
 
             if (jobQueue.Count > 0)
@@ -103,7 +105,19 @@ namespace WindowsFormsApp1
             }
             Console.WriteLine("\n");
 
-            page.UpdateDataGrid(frames);
+            // Update the DataGridView on the UI thread
+            page.Invoke((MethodInvoker)delegate
+            {
+                page.UpdateDataGrid(frames);
+            });
+        }
+
+        private void UpdateQueues()
+        {
+            page.Invoke((MethodInvoker)delegate
+            {
+                page.UpdateQueueGrid(jobQueue, readyQueue);
+            });
         }
     }
 }

@@ -8,33 +8,42 @@ namespace WindowsFormsApp1
     public partial class paging : Form
     {
         private List<ImageTextObject> ImageTextList;
+        private List<PageFrameInfo> PageFrameList;
+        private List<QueueInfo> QueueInfoList;
         private Image image1;
 
         public paging()
         {
             InitializeComponent();
             InitializeDataGridView();
-            
+            InitializeDataGridView2();
+            InitializeDataGridView3();
         }
 
         public void UpdateDataGrid(int[] frames)
         {
             ImageTextList = new List<ImageTextObject>();
+            PageFrameList = new List<PageFrameInfo>();
 
             for (int i = 0; i < frames.Length; i++)
             {
                 if (frames[i] == -1)
                 {
                     ImageTextList.Add(new ImageTextObject(image1, "FREE"));
+                    PageFrameList.Add(new PageFrameInfo { PageNumber = i, FrameNumber = "N/A", InMemory = false });
                 }
                 else
                 {
                     ImageTextList.Add(new ImageTextObject(image1, frames[i].ToString()));
+                    PageFrameList.Add(new PageFrameInfo { PageNumber = i, FrameNumber = frames[i].ToString(), InMemory = true });
                 }
             }
 
             dataGridView1.DataSource = null; // Reset the data source
             dataGridView1.DataSource = ImageTextList; // Set the new data source
+
+            dataGridView2.DataSource = null; // Reset the data source
+            dataGridView2.DataSource = PageFrameList; // Set the new data source
 
             // Manually trigger cell formatting for each cell
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -46,6 +55,27 @@ namespace WindowsFormsApp1
             }
 
             dataGridView1.Refresh();
+            dataGridView2.Refresh();
+        }
+
+        public void UpdateQueueGrid(Queue<(int processId, int memorySize)> jobQueue, List<int> readyQueue)
+        {
+            QueueInfoList = new List<QueueInfo>();
+
+            foreach (var job in jobQueue)
+            {
+                QueueInfoList.Add(new QueueInfo { QueueType = "Job Queue", ProcessId = job.processId, MemorySize = job.memorySize });
+            }
+
+            foreach (var processId in readyQueue)
+            {
+                QueueInfoList.Add(new QueueInfo { QueueType = "Ready Queue", ProcessId = processId, MemorySize = 0 }); // Assuming memory size is not needed for ready queue
+            }
+
+            dataGridView3.DataSource = null; // Reset the data source
+            dataGridView3.DataSource = QueueInfoList; // Set the new data source
+
+            dataGridView3.Refresh();
         }
 
         private void FormatCell(int rowIndex, int columnIndex)
@@ -73,21 +103,19 @@ namespace WindowsFormsApp1
             FormatCell(e.RowIndex, e.ColumnIndex);
         }
 
-
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
-
         }
+
         private void InitializeDataGridView()
         {
             dataGridView1.AutoGenerateColumns = false;
             dataGridView1.RowHeadersVisible = false; // Hide row headers
-            dataGridView1.ColumnHeadersVisible = false;  // Hide column headers
+            dataGridView1.ColumnHeadersVisible = false; // Hide column headers
 
             // Configure the DataGridView columns
             DataGridViewTextBoxColumn imageTextColumn = new DataGridViewTextBoxColumn
@@ -100,18 +128,101 @@ namespace WindowsFormsApp1
             dataGridView1.SelectionChanged += DataGridView1_SelectionChanged;
         }
 
+        private void InitializeDataGridView2()
+        {
+            dataGridView2.AutoGenerateColumns = false;
+            dataGridView2.RowHeadersVisible = false; // Hide row headers
+
+            // Configure the DataGridView columns
+            DataGridViewTextBoxColumn pageNumberColumn = new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Page Number",
+                DataPropertyName = "PageNumber"
+            };
+            dataGridView2.Columns.Add(pageNumberColumn);
+
+            DataGridViewTextBoxColumn frameNumberColumn = new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Frame Number",
+                DataPropertyName = "FrameNumber"
+            };
+            dataGridView2.Columns.Add(frameNumberColumn);
+
+            DataGridViewTextBoxColumn inMemoryColumn = new DataGridViewTextBoxColumn
+            {
+                HeaderText = "In Memory",
+                DataPropertyName = "InMemory"
+            };
+            dataGridView2.Columns.Add(inMemoryColumn);
+
+            // Subscribe to the SelectionChanged event
+            dataGridView2.SelectionChanged += DataGridView2_SelectionChanged;
+        }
+
+        private void InitializeDataGridView3()
+        {
+            dataGridView3.AutoGenerateColumns = false;
+            dataGridView3.RowHeadersVisible = false; // Hide row headers
+
+            // Configure the DataGridView columns
+            DataGridViewTextBoxColumn queueTypeColumn = new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Queue Type",
+                DataPropertyName = "QueueType"
+            };
+            dataGridView3.Columns.Add(queueTypeColumn);
+
+            DataGridViewTextBoxColumn processIdColumn = new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Process ID",
+                DataPropertyName = "ProcessId"
+            };
+            dataGridView3.Columns.Add(processIdColumn);
+
+            DataGridViewTextBoxColumn memorySizeColumn = new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Memory Size",
+                DataPropertyName = "MemorySize"
+            };
+            dataGridView3.Columns.Add(memorySizeColumn);
+
+            // Subscribe to the SelectionChanged event
+            dataGridView3.SelectionChanged += DataGridView3_SelectionChanged;
+        }
+
         private void DataGridView1_SelectionChanged(object sender, EventArgs e)
         {
             // Clear the selection to remove the blue color indicating an active cell
             dataGridView1.ClearSelection();
         }
 
+        private void DataGridView2_SelectionChanged(object sender, EventArgs e)
+        {
+            // Clear the selection to remove the blue color indicating an active cell
+            dataGridView2.ClearSelection();
+        }
+
+        private void DataGridView3_SelectionChanged(object sender, EventArgs e)
+        {
+            // Clear the selection to remove the blue color indicating an active cell
+            dataGridView3.ClearSelection();
+        }
 
         private void paging_Load(object sender, EventArgs e)
         {
             // Any additional initialization code
         }
+
+        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+        }
+
+        private void dataGridView3_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
+
     public class ImageTextObject
     {
         public Image Image { get; set; }
@@ -122,5 +233,19 @@ namespace WindowsFormsApp1
             Image = image;
             Text = text;
         }
+    }
+
+    public class PageFrameInfo
+    {
+        public int PageNumber { get; set; }
+        public string FrameNumber { get; set; }
+        public bool InMemory { get; set; }
+    }
+
+    public class QueueInfo
+    {
+        public string QueueType { get; set; }
+        public int ProcessId { get; set; }
+        public int MemorySize { get; set; }
     }
 }
