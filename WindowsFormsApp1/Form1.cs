@@ -24,13 +24,16 @@ namespace WindowsFormsApp1
         public paging page;
         private List<int> allocatedProcesses = new List<int>();
 
-        public Form1(DataGridView datagridview, MemoryManager memoryManager)
+        private int memorySize;
+
+        public Form1(DataGridView datagridview, MemoryManager memoryManager, int memorySize)
         {
 
             InitializeTimer(); // Initialize the timer
             dataGridView4 = datagridview;
 
             mem = memoryManager;
+            this.memorySize = memorySize;
         }
         private void label1_Click(object sender, EventArgs e)
         {
@@ -83,7 +86,7 @@ namespace WindowsFormsApp1
                 row.Cells.Add(cell6);
                 dataGridView4.Rows.Add(row);
 
-
+                Console.WriteLine(int.Parse(memorySize) + "asdasdsadsadsad");
                 mem.AllocateMemory(int.Parse(processId), int.Parse(memorySize));
                 mem.VisualizeMemory();
             }
@@ -107,8 +110,8 @@ namespace WindowsFormsApp1
             {
                 //MessageBox.Show("This is a message displayed to the user.");
 
-                Console.WriteLine("schedulingPolicyNum is " + schedulingPolicyNum);
-                Console.WriteLine("current time : " + DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond);
+                //Console.WriteLine("schedulingPolicyNum is " + schedulingPolicyNum);
+                //Console.WriteLine("current time : " + DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond);
                 switch (schedulingPolicyNum)
                 {
                     case 0:
@@ -200,6 +203,9 @@ namespace WindowsFormsApp1
 
                         if (oldBurstTimeVal - 1 == 0)
                         {
+                            mem.DeallocateMemory(int.Parse(dataGridView4.Rows[0].Cells[0].Value.ToString()));
+                            Console.WriteLine("Memorasdadsad" + int.Parse(dataGridView4.Rows[0].Cells[0].Value.ToString()));
+                            mem.VisualizeMemory();
                             // Handle case when the decremented value is 0
                             dataGridView4.Rows.RemoveAt(0);
                         }
@@ -280,6 +286,7 @@ namespace WindowsFormsApp1
 
         private void DecrementBurstTimeForRow(int rowIndex)
         {
+            Console.WriteLine("HI");
             if (rowIndex >= 0 && rowIndex < dataGridView4.RowCount)
             {
                 try
@@ -289,11 +296,14 @@ namespace WindowsFormsApp1
 
                     if (newBurstTimeVal <= 0)
                     {
+
+                        mem.DeallocateMemory(int.Parse(dataGridView4.Rows[rowIndex].Cells[0].Value.ToString()));
+                        Console.WriteLine("Memorasdadsad" + int.Parse(dataGridView4.Rows[rowIndex].Cells[0].Value.ToString()));
+                        mem.VisualizeMemory();
                         // If the decremented burst time is zero or negative, remove the row
                         dataGridView4.Rows.RemoveAt(rowIndex);
 
-                        mem.DeallocateMemory(int.Parse(dataGridView4.Rows[rowIndex].Cells[0].Value.ToString()));
-
+                        
                         // Adjust the currentRowIndex if the deleted row is before it
                         if (rowIndex <= currentRowIndex)
                         {
@@ -398,7 +408,7 @@ namespace WindowsFormsApp1
         private string MemorySizeGenerator()
         {
             Random random = new Random();
-            return (random.Next(4, 64)).ToString();
+            return (random.Next(1, memorySize)).ToString();
         }
 
         private string ArrivalTimeGenerator()

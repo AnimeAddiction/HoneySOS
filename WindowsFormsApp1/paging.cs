@@ -22,7 +22,7 @@ namespace WindowsFormsApp1
             InitializeDataGridView2();
             InitializeDataGridView3();   
             memoryManager = new MemoryManager(64, 4, this);
-            sched = new Form1(dataGridView4, memoryManager);
+            sched = new Form1(dataGridView4, memoryManager, 64); /// gi addan nako ug memory size 
         }
 
         public void UpdateDataGrid(int[] frames)

@@ -78,7 +78,7 @@ namespace WindowsFormsApp1
 
             freeMemory += freedMemory;
             readyQueue.Remove(processId);  // Remove from ready queue
-            UpdateQueues(); // Update the display of queues
+            
             Console.WriteLine($"Deallocated memory from Process {processId}, freed {freedMemory} memory.");
 
             if (jobQueue.Count > 0)
@@ -90,6 +90,7 @@ namespace WindowsFormsApp1
                     AllocateMemory(nextJob.processId, nextJob.memorySize);
                 }
             }
+            UpdateQueues(); // Update the display of queues
         }
 
         public void VisualizeMemory()
