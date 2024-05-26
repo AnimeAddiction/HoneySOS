@@ -78,7 +78,7 @@ namespace WindowsFormsApp1
 
             freeMemory += freedMemory;
             readyQueue.Remove(processId);  // Remove from ready queue
-            
+
             Console.WriteLine($"Deallocated memory from Process {processId}, freed {freedMemory} memory.");
 
             if (jobQueue.Count > 0)
@@ -91,6 +91,31 @@ namespace WindowsFormsApp1
                 }
             }
             UpdateQueues(); // Update the display of queues
+        }
+
+        public void ClearFrames()
+        {
+            // Reset all frames to -1 indicating they are free
+            for (int i = 0; i < frames.Length; i++)
+            {
+                frames[i] = -1;
+            }
+
+            // Reset freeMemory to the total memory
+            freeMemory = totalMemory;
+
+            // Clear job and ready queues
+            jobQueue.Clear();
+            readyQueue.Clear();
+
+            Console.WriteLine("Cleared all frames and reset memory.");
+
+            // Update the DataGridView on the UI thread
+            page.Invoke((MethodInvoker)delegate
+            {
+                UpdateQueues();
+                VisualizeMemory();
+            });
         }
 
         public void VisualizeMemory()

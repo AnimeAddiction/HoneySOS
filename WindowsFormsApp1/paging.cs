@@ -10,7 +10,6 @@ namespace WindowsFormsApp1
     {
         private List<ImageTextObject> ImageTextList;
         private List<PageFrameInfo> PageFrameList;
-        private List<QueueInfo> QueueInfoList;
         private Image image1;
         MemoryManager memoryManager;
         public Form1 sched;
@@ -20,7 +19,8 @@ namespace WindowsFormsApp1
             InitializeComponent();
             InitializeDataGridView();
             InitializeDataGridView2();
-            InitializeDataGridView3();   
+            InitializeDataGridViewJobQueue();
+            InitializeDataGridViewReadyQueue();
             memoryManager = new MemoryManager(64, 4, this);
             sched = new Form1(dataGridView4, memoryManager, 64); /// gi addan nako ug memory size 
         }
@@ -63,24 +63,68 @@ namespace WindowsFormsApp1
             dataGridView2.Refresh();
         }
 
+        private void InitializeDataGridViewJobQueue()
+        {
+            dataGridViewJobQueue.AutoGenerateColumns = false;
+            dataGridViewJobQueue.RowHeadersVisible = false; // Hide row headers
+
+            // Configure the DataGridView columns
+            DataGridViewTextBoxColumn processIdColumn = new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Process ID",
+                DataPropertyName = "ProcessId"
+            };
+            dataGridViewJobQueue.Columns.Add(processIdColumn);
+
+            DataGridViewTextBoxColumn memorySizeColumn = new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Memory Size",
+                DataPropertyName = "MemorySize"
+            };
+            dataGridViewJobQueue.Columns.Add(memorySizeColumn);
+
+            // Subscribe to the SelectionChanged event
+            dataGridViewJobQueue.SelectionChanged += DataGridViewJobQueue_SelectionChanged;
+        }
+
+        private void InitializeDataGridViewReadyQueue()
+        {
+            dataGridViewReadyQueue.AutoGenerateColumns = false;
+            dataGridViewReadyQueue.RowHeadersVisible = false; // Hide row headers
+
+            // Configure the DataGridView columns
+            DataGridViewTextBoxColumn processIdColumn = new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Process ID",
+                DataPropertyName = "ProcessId"
+            };
+            dataGridViewReadyQueue.Columns.Add(processIdColumn);
+
+            // Subscribe to the SelectionChanged event
+            dataGridViewReadyQueue.SelectionChanged += DataGridViewReadyQueue_SelectionChanged;
+        }
+
         public void UpdateQueueGrid(Queue<(int processId, int memorySize)> jobQueue, List<int> readyQueue)
         {
-            QueueInfoList = new List<QueueInfo>();
-
+            // Update job queue
+            var jobQueueList = new List<JobQueueItem>();
             foreach (var job in jobQueue)
             {
-                QueueInfoList.Add(new QueueInfo { QueueType = "Job Queue", ProcessId = job.processId, MemorySize = job.memorySize });
+                jobQueueList.Add(new JobQueueItem { ProcessId = job.processId, MemorySize = job.memorySize });
             }
 
+            dataGridViewJobQueue.DataSource = null;
+            dataGridViewJobQueue.DataSource = jobQueueList;
+
+            // Update ready queue
+            var readyQueueList = new List<ReadyQueueItem>();
             foreach (var processId in readyQueue)
             {
-                QueueInfoList.Add(new QueueInfo { QueueType = "Ready Queue", ProcessId = processId, MemorySize = 0 }); // Assuming memory size is not needed for ready queue
+                readyQueueList.Add(new ReadyQueueItem { ProcessId = processId });
             }
 
-            dataGridView3.DataSource = null; // Reset the data source
-            dataGridView3.DataSource = QueueInfoList; // Set the new data source
-
-            dataGridView3.Refresh();
+            dataGridViewReadyQueue.DataSource = null;
+            dataGridViewReadyQueue.DataSource = readyQueueList;
         }
 
         private void FormatCell(int rowIndex, int columnIndex)
@@ -173,43 +217,6 @@ namespace WindowsFormsApp1
         }
 
 
-        private void InitializeDataGridView3()
-        {
-            dataGridView3.AutoGenerateColumns = false;
-            dataGridView3.RowHeadersVisible = false; // Hide row headers
-
-            // Set the header style
-            dataGridView3.ColumnHeadersDefaultCellStyle.BackColor = Color.LightBlue;
-            dataGridView3.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
-            dataGridView3.EnableHeadersVisualStyles = false;
-            // Set a consistent row height
-            dataGridView3.RowTemplate.Height = 30;
-
-            // Configure the DataGridView columns
-            DataGridViewTextBoxColumn queueTypeColumn = new DataGridViewTextBoxColumn
-            {
-                HeaderText = "Queue Type",
-                DataPropertyName = "QueueType"
-            };
-            dataGridView3.Columns.Add(queueTypeColumn);
-
-            DataGridViewTextBoxColumn processIdColumn = new DataGridViewTextBoxColumn
-            {
-                HeaderText = "Process ID",
-                DataPropertyName = "ProcessId"
-            };
-            dataGridView3.Columns.Add(processIdColumn);
-
-            DataGridViewTextBoxColumn memorySizeColumn = new DataGridViewTextBoxColumn
-            {
-                HeaderText = "Memory Size",
-                DataPropertyName = "MemorySize"
-            };
-            dataGridView3.Columns.Add(memorySizeColumn);
-
-            // Subscribe to the SelectionChanged event
-            dataGridView3.SelectionChanged += DataGridView3_SelectionChanged;
-        }
 
 
         private void DataGridView1_SelectionChanged(object sender, EventArgs e)
@@ -224,12 +231,17 @@ namespace WindowsFormsApp1
             dataGridView2.ClearSelection();
         }
 
-        private void DataGridView3_SelectionChanged(object sender, EventArgs e)
+        private void DataGridViewJobQueue_SelectionChanged(object sender, EventArgs e)
         {
             // Clear the selection to remove the blue color indicating an active cell
-            dataGridView3.ClearSelection();
+            dataGridViewJobQueue.ClearSelection();
         }
 
+        private void DataGridViewReadyQueue_SelectionChanged(object sender, EventArgs e)
+        {
+            // Clear the selection to remove the blue color indicating an active cell
+            dataGridViewReadyQueue.ClearSelection();
+        }
         private void paging_Load(object sender, EventArgs e)
         {
             // Any additional initialization code
@@ -256,22 +268,36 @@ namespace WindowsFormsApp1
 
         private void button2_Click(object sender, EventArgs e)
         {
+            memoryManager.ClearFrames();
             sched.FCFS();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
+            memoryManager.ClearFrames();
             sched.SJF();
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
+            memoryManager.ClearFrames();
             sched.PRIORITY();
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
+            memoryManager.ClearFrames();
             sched.RR();
+        }
+
+        private void dataGridViewJobQueue_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void dataGridViewReadyQueue_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 
@@ -294,10 +320,14 @@ namespace WindowsFormsApp1
         public bool InMemory { get; set; }
     }
 
-    public class QueueInfo
+    public class JobQueueItem
     {
-        public string QueueType { get; set; }
         public int ProcessId { get; set; }
         public int MemorySize { get; set; }
+    }
+
+    public class ReadyQueueItem
+    {
+        public int ProcessId { get; set; }
     }
 }

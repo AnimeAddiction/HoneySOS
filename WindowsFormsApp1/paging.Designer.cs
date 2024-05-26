@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.panel3 = new System.Windows.Forms.Panel();
             this.panel8 = new System.Windows.Forms.Panel();
             this.dataGridView4 = new System.Windows.Forms.DataGridView();
             this.ProcessId = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -38,45 +37,36 @@
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.panel9 = new System.Windows.Forms.Panel();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.panel5 = new System.Windows.Forms.Panel();
             this.panel10 = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.dataGridViewJobQueue = new System.Windows.Forms.DataGridView();
             this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.dataGridView3 = new System.Windows.Forms.DataGridView();
+            this.dataGridViewReadyQueue = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewJobQueue)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewReadyQueue)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView1
             // 
             this.dataGridView1.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(928, 496);
+            this.dataGridView1.Location = new System.Drawing.Point(1361, 487);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.Size = new System.Drawing.Size(137, 437);
             this.dataGridView1.TabIndex = 1;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            // 
-            // panel3
-            // 
-            this.panel3.BackgroundImage = global::WindowsFormsApp1.Properties.Resources.Group_110;
-            this.panel3.Location = new System.Drawing.Point(625, 578);
-            this.panel3.Margin = new System.Windows.Forms.Padding(4);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(197, 54);
-            this.panel3.TabIndex = 6;
             // 
             // panel8
             // 
@@ -156,20 +146,11 @@
             this.Column5.ReadOnly = true;
             this.Column5.Width = 125;
             // 
-            // panel9
-            // 
-            this.panel9.BackgroundImage = global::WindowsFormsApp1.Properties.Resources.WidgetDate__6_;
-            this.panel9.Location = new System.Drawing.Point(508, 640);
-            this.panel9.Margin = new System.Windows.Forms.Padding(4);
-            this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(444, 463);
-            this.panel9.TabIndex = 10;
-            // 
             // dataGridView2
             // 
             this.dataGridView2.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Location = new System.Drawing.Point(477, 496);
+            this.dataGridView2.Location = new System.Drawing.Point(903, 487);
             this.dataGridView2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowHeadersWidth = 51;
@@ -177,15 +158,6 @@
             this.dataGridView2.Size = new System.Drawing.Size(408, 415);
             this.dataGridView2.TabIndex = 2;
             this.dataGridView2.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellContentClick);
-            // 
-            // panel5
-            // 
-            this.panel5.BackgroundImage = global::WindowsFormsApp1.Properties.Resources.Simulation_of_Memory_Management;
-            this.panel5.Location = new System.Drawing.Point(1251, 708);
-            this.panel5.Margin = new System.Windows.Forms.Padding(4);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(601, 116);
-            this.panel5.TabIndex = 12;
             // 
             // panel10
             // 
@@ -200,25 +172,36 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.panel1.BackgroundImage = global::WindowsFormsApp1.Properties.Resources.image_7;
-            this.panel1.Controls.Add(this.dataGridView1);
-            this.panel1.Controls.Add(this.dataGridView3);
+            this.panel1.Controls.Add(this.dataGridViewReadyQueue);
+            this.panel1.Controls.Add(this.dataGridViewJobQueue);
             this.panel1.Controls.Add(this.dataGridView2);
+            this.panel1.Controls.Add(this.dataGridView1);
             this.panel1.Controls.Add(this.button5);
             this.panel1.Controls.Add(this.button4);
             this.panel1.Controls.Add(this.button3);
             this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.panel10);
-            this.panel1.Controls.Add(this.panel5);
-            this.panel1.Controls.Add(this.panel9);
             this.panel1.Controls.Add(this.panel8);
-            this.panel1.Controls.Add(this.panel3);
             this.panel1.Location = new System.Drawing.Point(-1, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1913, 1118);
             this.panel1.TabIndex = 0;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // dataGridViewJobQueue
+            // 
+            this.dataGridViewJobQueue.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.dataGridViewJobQueue.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewJobQueue.Location = new System.Drawing.Point(37, 487);
+            this.dataGridViewJobQueue.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.dataGridViewJobQueue.Name = "dataGridViewJobQueue";
+            this.dataGridViewJobQueue.RowHeadersWidth = 51;
+            this.dataGridViewJobQueue.RowTemplate.Height = 24;
+            this.dataGridViewJobQueue.Size = new System.Drawing.Size(395, 415);
+            this.dataGridViewJobQueue.TabIndex = 19;
+            this.dataGridViewJobQueue.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewJobQueue_CellContentClick);
             // 
             // button5
             // 
@@ -275,18 +258,18 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // dataGridView3
+            // dataGridViewReadyQueue
             // 
-            this.dataGridView3.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView3.Location = new System.Drawing.Point(74, 496);
-            this.dataGridView3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.dataGridView3.Name = "dataGridView3";
-            this.dataGridView3.RowHeadersWidth = 51;
-            this.dataGridView3.RowTemplate.Height = 24;
-            this.dataGridView3.Size = new System.Drawing.Size(395, 415);
-            this.dataGridView3.TabIndex = 3;
-            this.dataGridView3.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView3_CellContentClick);
+            this.dataGridViewReadyQueue.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.dataGridViewReadyQueue.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewReadyQueue.Location = new System.Drawing.Point(477, 487);
+            this.dataGridViewReadyQueue.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.dataGridViewReadyQueue.Name = "dataGridViewReadyQueue";
+            this.dataGridViewReadyQueue.RowHeadersWidth = 51;
+            this.dataGridViewReadyQueue.RowTemplate.Height = 24;
+            this.dataGridViewReadyQueue.Size = new System.Drawing.Size(395, 415);
+            this.dataGridViewReadyQueue.TabIndex = 20;
+            this.dataGridViewReadyQueue.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewReadyQueue_CellContentClick);
             // 
             // paging
             // 
@@ -306,18 +289,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewJobQueue)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewReadyQueue)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Panel panel8;
-        private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.DataGridView dataGridView2;
-        private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Panel panel10;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.DataGridView dataGridView4;
@@ -332,6 +313,7 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.DataGridView dataGridView3;
+        private System.Windows.Forms.DataGridView dataGridViewJobQueue;
+        private System.Windows.Forms.DataGridView dataGridViewReadyQueue;
     }
 }
