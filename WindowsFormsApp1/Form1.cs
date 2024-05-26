@@ -56,7 +56,8 @@ namespace WindowsFormsApp1
                 DataGridViewRow row = new DataGridViewRow();
 
                 DataGridViewCell cell1 = new DataGridViewTextBoxCell();
-                cell1.Value = ProcessIdGenerator();
+                String processId = ProcessIdGenerator();
+                cell1.Value = processId;
                 row.Cells.Add(cell1);
 
                 DataGridViewCell cell2 = new DataGridViewTextBoxCell();
@@ -64,7 +65,8 @@ namespace WindowsFormsApp1
                 row.Cells.Add(cell2);
 
                 DataGridViewCell cell3 = new DataGridViewTextBoxCell();
-                cell3.Value = MemorySizeGenerator();
+                String memorySize = MemorySizeGenerator();
+                cell3.Value = memorySize;
                 row.Cells.Add(cell3);
 
                 DataGridViewCell cell4 = new DataGridViewTextBoxCell();
@@ -80,6 +82,10 @@ namespace WindowsFormsApp1
                 cell6.Value = StatusGenerator();
                 row.Cells.Add(cell6);
                 dataGridView4.Rows.Add(row);
+
+
+                mem.AllocateMemory(int.Parse(processId), int.Parse(memorySize));
+                mem.VisualizeMemory();
             }
         }
 
@@ -162,7 +168,7 @@ namespace WindowsFormsApp1
             {
                 dataGridView4.Rows[rowIndex].DefaultCellStyle.BackColor = Color.LightBlue;
             }
-            AllocateMemoryIfNeeded(rowIndex);
+            //AllocateMemoryIfNeeded(rowIndex);
             
         }
         private void AllocateMemoryIfNeeded(int rowIndex)
@@ -286,6 +292,8 @@ namespace WindowsFormsApp1
                         // If the decremented burst time is zero or negative, remove the row
                         dataGridView4.Rows.RemoveAt(rowIndex);
 
+                        mem.DeallocateMemory(int.Parse(dataGridView4.Rows[rowIndex].Cells[0].Value.ToString()));
+
                         // Adjust the currentRowIndex if the deleted row is before it
                         if (rowIndex <= currentRowIndex)
                         {
@@ -390,7 +398,7 @@ namespace WindowsFormsApp1
         private string MemorySizeGenerator()
         {
             Random random = new Random();
-            return (random.Next(100) + 1).ToString();
+            return (random.Next(4, 64)).ToString();
         }
 
         private string ArrivalTimeGenerator()
