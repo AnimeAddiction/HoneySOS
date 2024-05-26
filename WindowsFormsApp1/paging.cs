@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Windows.Forms;
 
 namespace WindowsFormsApp1
@@ -11,14 +12,17 @@ namespace WindowsFormsApp1
         private List<PageFrameInfo> PageFrameList;
         private List<QueueInfo> QueueInfoList;
         private Image image1;
-
+        MemoryManager memoryManager;
+        public Form1 sched;
+        
         public paging()
         {
             InitializeComponent();
             InitializeDataGridView();
             InitializeDataGridView2();
-            InitializeDataGridView3();
-
+            InitializeDataGridView3();   
+            memoryManager = new MemoryManager(3096, 20, this);
+            sched = new Form1(dataGridView4, memoryManager);
         }
 
         public void UpdateDataGrid(int[] frames)
@@ -243,6 +247,31 @@ namespace WindowsFormsApp1
         private void pictureBox1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            sched.AddProcess();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            sched.FCFS();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            sched.SJF();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            sched.PRIORITY();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            sched.RR();
         }
     }
 

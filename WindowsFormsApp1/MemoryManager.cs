@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApp1
 {
-    internal class MemoryManager
+    public class MemoryManager
     {
         private int totalMemory;
         private int pageSize;
@@ -114,10 +114,19 @@ namespace WindowsFormsApp1
 
         private void UpdateQueues()
         {
-            page.Invoke((MethodInvoker)delegate
+            if (page.InvokeRequired)
             {
+                // If we're not on the UI thread, invoke this method on the UI thread
+                page.Invoke((MethodInvoker)delegate
+                {
+                    page.UpdateQueueGrid(jobQueue, readyQueue);
+                });
+            }
+            else
+            {
+                // If we're already on the UI thread, update the queues directly
                 page.UpdateQueueGrid(jobQueue, readyQueue);
-            });
+            }
         }
     }
 }
