@@ -107,7 +107,7 @@ namespace WindowsFormsApp1
                         {
                             DecrementTopRowBurstTime();
                         }
-                        AddProcess();
+                        //AddProcess();
                         SetTopRowStatus("Running");
                         break;
 
@@ -117,7 +117,7 @@ namespace WindowsFormsApp1
                             DecrementTopRowBurstTime();
                         }
 
-                        AddProcess();
+                        //AddProcess();
                         SortTable();
                         SetTopRowStatus("Running");
                         break;
@@ -129,7 +129,7 @@ namespace WindowsFormsApp1
                             DecrementTopRowBurstTime();
                             HighlightCurrentRow(currentRowIndex);
                         }
-                        AddProcess();
+                        //AddProcess();
                         SortTable();
                         SetTopRowStatus("Running");
                         break;
