@@ -5,17 +5,19 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApp1
 {
-    internal class MemoryManager
+    public class MemoryManager
     {
-        private int totalMemory;
-        private int pageSize;
-        private int freeMemory;
-        private int[] frames;
-        private Queue<(int processId, int memorySize)> jobQueue;  // Job queue
-        private List<int> readyQueue;  // Ready queue
-        private paging page;
+        public int totalMemory;
+        public int pageSize;
+        public int freeMemory;
+        public int[] frames;
+        public Queue<(int processId, int memorySize)> jobQueue;  // Job queue
+        public List<int> readyQueue;  // Ready queue
+        //public List<int> jobQueuee;
+        public List<(int processId, int memorySize)> jobQueuee;
+        private HoneyOS page;
 
-        public MemoryManager(int totalMemory, int pageSize, paging page)
+        public MemoryManager(int totalMemory, int pageSize, HoneyOS page)
         {
             this.totalMemory = totalMemory;
             this.pageSize = pageSize;
@@ -30,6 +32,7 @@ namespace WindowsFormsApp1
 
             this.jobQueue = new Queue<(int processId, int memorySize)>();  // Initialize job queue
             this.readyQueue = new List<int>();  // Initialize ready queue
+            this.jobQueuee = new List<(int processId, int memorySize)>();  // Initialize job queue
             this.page = page;
         }
 
@@ -64,6 +67,10 @@ namespace WindowsFormsApp1
             return false;
         }
 
+        public bool CheckAvailableMemory(int memorySize)
+        {
+            return (freeMemory) >= memorySize;
+        }
         public void DeallocateMemory(int processId)
         {
             int freedMemory = 0;
@@ -111,13 +118,33 @@ namespace WindowsFormsApp1
                 page.UpdateDataGrid(frames);
             });
         }
-
+        public int CalculateTotalMemoryUsed()
+        {
+            int usedMemory = 0;
+            for (int i = 0; i < frames.Length; i++)
+            {
+                if (frames[i] != -1)
+                {
+                    usedMemory += pageSize;
+                }
+            }
+            return usedMemory;
+        }
         private void UpdateQueues()
         {
-            page.Invoke((MethodInvoker)delegate
+            if (page.InvokeRequired)
             {
+                // If we're not on the UI thread, invoke this method on the UI thread
+                page.Invoke((MethodInvoker)delegate
+                {
+                    page.UpdateQueueGrid(jobQueue, readyQueue);
+                });
+            }
+            else
+            {
+                // If we're already on the UI thread, update the queues directly
                 page.UpdateQueueGrid(jobQueue, readyQueue);
-            });
+            }
         }
     }
 }

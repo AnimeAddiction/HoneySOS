@@ -1,24 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Windows.Forms;
 
 namespace WindowsFormsApp1
 {
-    public partial class paging : Form
+    public partial class HoneyOS : Form
     {
         private List<ImageTextObject> ImageTextList;
         private List<PageFrameInfo> PageFrameList;
         private List<QueueInfo> QueueInfoList;
         private Image image1;
-
-        public paging()
+        MemoryManager memoryManager;
+        public Form1 sched;
+        
+        public HoneyOS()
         {
             InitializeComponent();
             InitializeDataGridView();
             InitializeDataGridView2();
-            InitializeDataGridView3();
-
+            //InitializeDataGridView3();   
+            memoryManager = new MemoryManager(64, 4, this);
+            sched = new Form1(dataGridView4, memoryManager);
         }
 
         public void UpdateDataGrid(int[] frames)
@@ -73,10 +77,10 @@ namespace WindowsFormsApp1
                 QueueInfoList.Add(new QueueInfo { QueueType = "Ready Queue", ProcessId = processId, MemorySize = 0 }); // Assuming memory size is not needed for ready queue
             }
 
-            dataGridView3.DataSource = null; // Reset the data source
-            dataGridView3.DataSource = QueueInfoList; // Set the new data source
+            //dataGridView3.DataSource = null; // Reset the data source
+            //dataGridView3.DataSource = QueueInfoList; // Set the new data source
 
-            dataGridView3.Refresh();
+            //dataGridView3.Refresh();
         }
 
         private void FormatCell(int rowIndex, int columnIndex)
@@ -169,7 +173,7 @@ namespace WindowsFormsApp1
         }
 
 
-        private void InitializeDataGridView3()
+        /**private void InitializeDataGridView3()
         {
             dataGridView3.AutoGenerateColumns = false;
             dataGridView3.RowHeadersVisible = false; // Hide row headers
@@ -205,7 +209,7 @@ namespace WindowsFormsApp1
 
             // Subscribe to the SelectionChanged event
             dataGridView3.SelectionChanged += DataGridView3_SelectionChanged;
-        }
+        }**/
 
 
         private void DataGridView1_SelectionChanged(object sender, EventArgs e)
@@ -223,7 +227,7 @@ namespace WindowsFormsApp1
         private void DataGridView3_SelectionChanged(object sender, EventArgs e)
         {
             // Clear the selection to remove the blue color indicating an active cell
-            dataGridView3.ClearSelection();
+            //dataGridView3.ClearSelection();
         }
 
         private void paging_Load(object sender, EventArgs e)
@@ -241,6 +245,41 @@ namespace WindowsFormsApp1
 
   
         private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            sched.AddProcess();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            sched.FCFS();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            sched.SJF();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            sched.PRIORITY();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            sched.RR();
+        }
+
+        private void dataGridView4_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void panel8_Paint(object sender, PaintEventArgs e)
         {
 
         }

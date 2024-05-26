@@ -12,7 +12,7 @@ public partial class Program
         Application.SetCompatibleTextRenderingDefault(false);
 
         // Create and initialize the paging form
-        paging page = new paging();
+        HoneyOS page = new HoneyOS();
 
         // Show the paging form
         page.Show();
@@ -21,38 +21,38 @@ public partial class Program
         MemoryManager mm = new MemoryManager(64, 4, page);
 
         // Perform memory management operations as needed
-        mm.AllocateMemory(1, 10);
-        mm.VisualizeMemory();
-        Delay(2000); // Delay for 2 seconds
+       // mm.AllocateMemory(1, 10);
+       // mm.VisualizeMemory();
+        //Delay(2000); // Delay for 2 seconds
 
-        mm.AllocateMemory(2, 20);
-        mm.VisualizeMemory();
-        Delay(2000); // Delay for 2 seconds
+       // mm.AllocateMemory(2, 20);
+      //  mm.VisualizeMemory();
+      //  Delay(2000); // Delay for 2 seconds
 
-        mm.DeallocateMemory(1);
-        mm.VisualizeMemory();
-        Delay(2000); // Delay for 2 seconds
+      //  mm.DeallocateMemory(1);
+      //  mm.VisualizeMemory();
+       // Delay(2000); // Delay for 2 seconds
 
-        mm.AllocateMemory(3, 15);
-        mm.VisualizeMemory();
-        Delay(2000); // Delay for 2 seconds
+      //  mm.AllocateMemory(3, 15);
+      //  mm.VisualizeMemory();
+     //   Delay(2000); // Delay for 2 seconds
 
-        mm.AllocateMemory(4, 15);
-        mm.VisualizeMemory();
-        Delay(2000); // Delay for 2 seconds
+      //  mm.AllocateMemory(4, 15);
+      //  mm.VisualizeMemory();
+      //  Delay(2000); // Delay for 2 seconds
 
-        mm.AllocateMemory(5, 15);
-        mm.VisualizeMemory();
-        Delay(2000); // Delay for 2 seconds
+      //  mm.AllocateMemory(5, 15);
+       // mm.VisualizeMemory();
+       // Delay(2000); // Delay for 2 seconds
 
-        mm.AllocateMemory(6, 15);
-        mm.VisualizeMemory();
-        Delay(2000); // Delay for 2 seconds
+       // mm.AllocateMemory(6, 15);
+       // mm.VisualizeMemory();
+      //  Delay(2000); // Delay for 2 seconds
 
 
-        mm.DeallocateMemory(2);
-        mm.VisualizeMemory();
-        Delay(2000); // Delay for 2 seconds
+      //  mm.DeallocateMemory(2);
+      //  mm.VisualizeMemory();
+      //  Delay(2000); // Delay for 2 seconds
 
         // Start the message loop on the UI thread
         Application.Run();
