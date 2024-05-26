@@ -256,21 +256,25 @@ namespace WindowsFormsApp1
 
         private void button2_Click(object sender, EventArgs e)
         {
+            memoryManager.ClearFrames();
             sched.FCFS();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
+            memoryManager.ClearFrames();
             sched.SJF();
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
+            memoryManager.ClearFrames();
             sched.PRIORITY();
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
+            memoryManager.ClearFrames();
             sched.RR();
         }
     }
