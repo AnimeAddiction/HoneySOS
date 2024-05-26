@@ -162,6 +162,12 @@
   <ItemGroup>
     <Content Include="Bee.ico" />
     <Content Include="Resources\Bee.ico" />
+    <None Include="Resources\WidgetDate %2813%29.png" />
+    <None Include="Resources\WidgetDate %2812%29.png" />
+    <None Include="Resources\WidgetDate %2811%29.png" />
+    <None Include="Resources\WidgetDate %288%29.png" />
+    <None Include="Resources\WidgetDate %289%29.png" />
+    <None Include="Resources\WidgetDate %2810%29.png" />
     <None Include="Resources\WidgetDate %287%29.png" />
     <None Include="Resources\WidgetDate %286%29.png" />
     <None Include="Resources\WidgetDate %285%29.png" />
@@ -197,6 +203,8 @@
     <None Include="Resources\Group 112.png" />
     <None Include="Resources\Simulation of Memory Management.png" />
     <None Include="Resources\Simulation of the Scheduling Policies.png" />
+    <None Include="Resources\Group 114.png" />
+    <None Include="Resources\Group 115.png" />
     <Content Include="Resources\Startup ver 3.gif" />
     <None Include="Resources\Startup ver 31.gif" />
     <Content Include="Resources\Startup ver 4.gif" />

@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApp1
 {
-    public partial class paging : Form
+    public partial class HoneyOS : Form
     {
         private List<ImageTextObject> ImageTextList;
         private List<PageFrameInfo> PageFrameList;
@@ -15,7 +15,7 @@ namespace WindowsFormsApp1
         MemoryManager memoryManager;
         public Form1 sched;
         
-        public paging()
+        public HoneyOS()
         {
             InitializeComponent();
             InitializeDataGridView();
@@ -272,6 +272,16 @@ namespace WindowsFormsApp1
         private void button5_Click(object sender, EventArgs e)
         {
             sched.RR();
+        }
+
+        private void dataGridView4_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void panel8_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 

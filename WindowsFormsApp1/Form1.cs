@@ -22,7 +22,7 @@ namespace WindowsFormsApp1
 
 
         public DataGridView dataGridView4;
-        public paging page;
+        public HoneyOS page;
         private List<int> allocatedProcesses = new List<int>();
 
         private int totalMemoryUsed = 0;
@@ -32,6 +32,7 @@ namespace WindowsFormsApp1
             InitializeTimer(); // Initialize the timer
             dataGridView4 = datagridview;
             mem = memoryManager;
+
         }
 
         private void label1_Click(object sender, EventArgs e) { }
@@ -39,7 +40,7 @@ namespace WindowsFormsApp1
         private void InitializeTimer()
         {
             // Create a timer that calls TimerCallback every 1000 milliseconds
-            timer = new System.Threading.Timer(TimerCallback, null, 0, 2000);
+            timer = new System.Threading.Timer(TimerCallback, null, 0, 1000);
         }
 
         // Method to add a row to the DataGridView
@@ -599,6 +600,23 @@ namespace WindowsFormsApp1
             {
                 return "Job Queue";
             }
+        }
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // Form1
+            // 
+            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Name = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
+            this.ResumeLayout(false);
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
         }
     }
 }

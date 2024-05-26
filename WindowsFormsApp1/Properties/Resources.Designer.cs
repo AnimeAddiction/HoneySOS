@@ -123,6 +123,26 @@ namespace WindowsFormsApp1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Group_114 {
+            get {
+                object obj = ResourceManager.GetObject("Group 114", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Group_115 {
+            get {
+                object obj = ResourceManager.GetObject("Group 115", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Honey_OS__4_ {
             get {
                 object obj = ResourceManager.GetObject("Honey OS (4)", resourceCulture);
@@ -363,6 +383,46 @@ namespace WindowsFormsApp1.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap WidgetDate__10_ {
+            get {
+                object obj = ResourceManager.GetObject("WidgetDate (10)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap WidgetDate__11_ {
+            get {
+                object obj = ResourceManager.GetObject("WidgetDate (11)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap WidgetDate__12_ {
+            get {
+                object obj = ResourceManager.GetObject("WidgetDate (12)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap WidgetDate__13_ {
+            get {
+                object obj = ResourceManager.GetObject("WidgetDate (13)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap WidgetDate__3_ {
             get {
                 object obj = ResourceManager.GetObject("WidgetDate (3)", resourceCulture);
@@ -406,6 +466,26 @@ namespace WindowsFormsApp1.Properties {
         internal static System.Drawing.Bitmap WidgetDate__7_ {
             get {
                 object obj = ResourceManager.GetObject("WidgetDate (7)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap WidgetDate__8_ {
+            get {
+                object obj = ResourceManager.GetObject("WidgetDate (8)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap WidgetDate__9_ {
+            get {
+                object obj = ResourceManager.GetObject("WidgetDate (9)", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

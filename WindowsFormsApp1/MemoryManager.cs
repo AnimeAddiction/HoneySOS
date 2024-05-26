@@ -15,9 +15,9 @@ namespace WindowsFormsApp1
         public List<int> readyQueue;  // Ready queue
         //public List<int> jobQueuee;
         public List<(int processId, int memorySize)> jobQueuee;
-        private paging page;
+        private HoneyOS page;
 
-        public MemoryManager(int totalMemory, int pageSize, paging page)
+        public MemoryManager(int totalMemory, int pageSize, HoneyOS page)
         {
             this.totalMemory = totalMemory;
             this.pageSize = pageSize;
