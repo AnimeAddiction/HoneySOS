@@ -20,8 +20,8 @@ namespace WindowsFormsApp1
             InitializeComponent();
             InitializeDataGridView();
             InitializeDataGridView2();
-            InitializeDataGridView3();   
-            memoryManager = new MemoryManager(3096, 20, this);
+            //InitializeDataGridView3();   
+            memoryManager = new MemoryManager(64, 4, this);
             sched = new Form1(dataGridView4, memoryManager);
         }
 
@@ -77,10 +77,10 @@ namespace WindowsFormsApp1
                 QueueInfoList.Add(new QueueInfo { QueueType = "Ready Queue", ProcessId = processId, MemorySize = 0 }); // Assuming memory size is not needed for ready queue
             }
 
-            dataGridView3.DataSource = null; // Reset the data source
-            dataGridView3.DataSource = QueueInfoList; // Set the new data source
+            //dataGridView3.DataSource = null; // Reset the data source
+            //dataGridView3.DataSource = QueueInfoList; // Set the new data source
 
-            dataGridView3.Refresh();
+            //dataGridView3.Refresh();
         }
 
         private void FormatCell(int rowIndex, int columnIndex)
@@ -173,7 +173,7 @@ namespace WindowsFormsApp1
         }
 
 
-        private void InitializeDataGridView3()
+        /**private void InitializeDataGridView3()
         {
             dataGridView3.AutoGenerateColumns = false;
             dataGridView3.RowHeadersVisible = false; // Hide row headers
@@ -209,7 +209,7 @@ namespace WindowsFormsApp1
 
             // Subscribe to the SelectionChanged event
             dataGridView3.SelectionChanged += DataGridView3_SelectionChanged;
-        }
+        }**/
 
 
         private void DataGridView1_SelectionChanged(object sender, EventArgs e)
@@ -227,7 +227,7 @@ namespace WindowsFormsApp1
         private void DataGridView3_SelectionChanged(object sender, EventArgs e)
         {
             // Clear the selection to remove the blue color indicating an active cell
-            dataGridView3.ClearSelection();
+            //dataGridView3.ClearSelection();
         }
 
         private void paging_Load(object sender, EventArgs e)
