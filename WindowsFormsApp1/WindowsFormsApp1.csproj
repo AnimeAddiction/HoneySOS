@@ -62,6 +62,7 @@
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ProcessInfo.cs" />
     <Compile Include="MemoryManager.cs" />
     <Compile Include="desktop.cs">
       <SubType>Form</SubType>

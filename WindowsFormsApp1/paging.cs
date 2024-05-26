@@ -104,7 +104,7 @@ namespace WindowsFormsApp1
             dataGridViewReadyQueue.SelectionChanged += DataGridViewReadyQueue_SelectionChanged;
         }
 
-        public void UpdateQueueGrid(Queue<(int processId, int memorySize)> jobQueue, List<int> readyQueue)
+        public void UpdateQueueGrid(Queue<(int processId, int memorySize)> jobQueue, Dictionary<int, int> readyQueue)
         {
             // Update job queue
             var jobQueueList = new List<JobQueueItem>();
@@ -118,14 +118,15 @@ namespace WindowsFormsApp1
 
             // Update ready queue
             var readyQueueList = new List<ReadyQueueItem>();
-            foreach (var processId in readyQueue)
+            foreach (var processId in readyQueue.Keys)
             {
-                readyQueueList.Add(new ReadyQueueItem { ProcessId = processId });
+                readyQueueList.Add(new ReadyQueueItem { ProcessId = processId, MemorySize = readyQueue[processId] });
             }
 
             dataGridViewReadyQueue.DataSource = null;
             dataGridViewReadyQueue.DataSource = readyQueueList;
         }
+
 
         private void FormatCell(int rowIndex, int columnIndex)
         {
@@ -329,5 +330,6 @@ namespace WindowsFormsApp1
     public class ReadyQueueItem
     {
         public int ProcessId { get; set; }
+        public int MemorySize { get; set; }
     }
 }

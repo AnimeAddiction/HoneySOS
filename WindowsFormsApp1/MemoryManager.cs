@@ -11,8 +11,8 @@ namespace WindowsFormsApp1
         private int pageSize;
         private int freeMemory;
         private int[] frames;
-        private Queue<(int processId, int memorySize)> jobQueue;  // Job queue
-        private List<int> readyQueue;  // Ready queue
+        public Queue<(int processId, int memorySize)> jobQueue;  // Job queue
+        public Dictionary<int, int> readyMemoryMap;  // Dictionary to store memory size for processes in the ready queue
         private paging page;
 
         public MemoryManager(int totalMemory, int pageSize, paging page)
@@ -21,6 +21,7 @@ namespace WindowsFormsApp1
             this.pageSize = pageSize;
             this.freeMemory = totalMemory;
             this.frames = new int[totalMemory / pageSize];
+            this.readyMemoryMap = new Dictionary<int, int>();  // Initialize memory map for processes in the ready queue
 
             // Initialize all frames to -1 indicating they are free
             for (int i = 0; i < frames.Length; i++)
@@ -29,7 +30,6 @@ namespace WindowsFormsApp1
             }
 
             this.jobQueue = new Queue<(int processId, int memorySize)>();  // Initialize job queue
-            this.readyQueue = new List<int>();  // Initialize ready queue
             this.page = page;
         }
 
@@ -51,7 +51,7 @@ namespace WindowsFormsApp1
                 if (allocatedPages.Count == numPages)
                 {
                     freeMemory -= memorySize;
-                    readyQueue.Add(processId);  // Add to ready queue
+                    readyMemoryMap.Add(processId, memorySize);  // Add memory size to readyMemoryMap
                     UpdateQueues(); // Update the display of queues
                     Console.WriteLine($"Allocated {memorySize} memory to Process {processId}");
                     return true;
@@ -77,7 +77,7 @@ namespace WindowsFormsApp1
             }
 
             freeMemory += freedMemory;
-            readyQueue.Remove(processId);  // Remove from ready queue
+            readyMemoryMap.Remove(processId);  // Remove memory size from readyMemoryMap
 
             Console.WriteLine($"Deallocated memory from Process {processId}, freed {freedMemory} memory.");
 
@@ -104,9 +104,11 @@ namespace WindowsFormsApp1
             // Reset freeMemory to the total memory
             freeMemory = totalMemory;
 
-            // Clear job and ready queues
+            // Clear job queue
             jobQueue.Clear();
-            readyQueue.Clear();
+
+            // Clear readyMemoryMap
+            readyMemoryMap.Clear();
 
             Console.WriteLine("Cleared all frames and reset memory.");
 
@@ -145,14 +147,103 @@ namespace WindowsFormsApp1
                 // If we're not on the UI thread, invoke this method on the UI thread
                 page.Invoke((MethodInvoker)delegate
                 {
-                    page.UpdateQueueGrid(jobQueue, readyQueue);
+                    page.UpdateQueueGrid(jobQueue, readyMemoryMap);
                 });
             }
             else
             {
                 // If we're already on the UI thread, update the queues directly
-                page.UpdateQueueGrid(jobQueue, readyQueue);
+                page.UpdateQueueGrid(jobQueue, readyMemoryMap);
             }
         }
+
+        public void FCFS()
+        {
+            if (jobQueue.Count > 0)
+            {
+                int memorySize = jobQueue.Peek().memorySize;
+                if (freeMemory >= memorySize)
+                {
+                    var nextJob = jobQueue.Dequeue();
+                    if (AllocateMemory(nextJob.processId, nextJob.memorySize))
+                    {
+                        Console.WriteLine($"Allocated memory to Process {nextJob.processId} using FCFS.");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Insufficient memory for Process {nextJob.processId}.");
+                    }
+                }
+                else
+                {
+                    UpdateQueues();
+                }
+                
+            }
+        }
+
+        public void SJF(List<ProcessInfo> processes)
+        {
+            // Create a temporary list to hold jobs from the job queue
+            List<ProcessInfo> tempJobs = new List<ProcessInfo>(processes);
+
+            // Sort the temporary list based on burst time (memory size)
+            tempJobs.Sort((job1, job2) => job1.BurstTime.CompareTo(job2.BurstTime));
+
+            ClearFrames();  
+            readyMemoryMap.Clear();
+            freeMemory = totalMemory;
+
+            // Iterate through the sorted list and try to allocate memory to each job
+            foreach (var job in tempJobs)
+            {
+                
+                    UpdateQueues();
+                    // If there is enough free memory, allocate memory to the job
+                    if (AllocateMemory(int.Parse(job.ProcessId), job.MemorySize))
+                    {
+
+                        Console.WriteLine($"Allocated memory to Process {job.ProcessId} using SJF.");
+                        UpdateQueues();
+                       // Exit the method after allocating memory to the first suitable job
+                    }
+              
+            }
+
+            // If no suitable job is found, update the queues without allocating memory
+            UpdateQueues();
+        }
+
+        public void Priority(List<ProcessInfo> processes)
+        {
+            // Create a temporary list to hold jobs from the job queue
+            List<ProcessInfo> tempJobs = new List<ProcessInfo>(processes);
+
+            // Sort the temporary list based on priority
+            tempJobs.Sort((job1, job2) => job1.Priority.CompareTo(job2.Priority));
+
+            ClearFrames();
+            readyMemoryMap.Clear();
+            freeMemory = totalMemory;
+
+            // Iterate through the sorted list and try to allocate memory to each job
+            foreach (var job in tempJobs)
+            {
+                UpdateQueues();
+                // If there is enough free memory, allocate memory to the job
+                if (AllocateMemory(int.Parse(job.ProcessId), job.MemorySize))
+                {
+                    Console.WriteLine($"Allocated memory to Process {job.ProcessId} using Priority.");
+                    UpdateQueues();
+                    // Exit the method after allocating memory to the first suitable job
+                }
+            }
+
+            // If no suitable job is found, update the queues without allocating memory
+            UpdateQueues();
+        }
+
+
+
     }
 }
