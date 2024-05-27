@@ -16,7 +16,7 @@ namespace WindowsFormsApp1
         private int schedulingPolicyNum = 0;
         private int currentRowIndex = 0;
         private int previousRowIndex = 0;
-        private int timeQuantum = 2;
+        private int timeQuantum = 1;
         private MemoryManager mem;
         private bool touched = false;
 
@@ -116,6 +116,7 @@ namespace WindowsFormsApp1
 
         private void LoopFunction()
         {
+            timeQuantum = 1;
             if (dataGridView4.InvokeRequired)
             {
                 // If called from a non-UI thread, invoke on the UI thread
@@ -138,6 +139,7 @@ namespace WindowsFormsApp1
                         break;
 
                     case 3:
+                        timeQuantum = 2;
                         ExecuteRoundRobin();
                         break;
                 }

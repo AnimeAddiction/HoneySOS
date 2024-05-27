@@ -99,6 +99,34 @@ namespace WindowsFormsApp1
             }
         }
 
+        public void ClearFrames()
+        {
+            // Reset all frames to -1 indicating they are free
+            for (int i = 0; i < frames.Length; i++)
+            {
+                frames[i] = -1;
+            }
+
+            // Reset freeMemory to the total memory
+            freeMemory = totalMemory;
+
+            // Clear job queue
+            jobQueue.Clear();
+
+            // Clear readyMemoryMap
+            readyQueue.Clear();
+
+            Console.WriteLine("Cleared all frames and reset memory.");
+
+            // Update the DataGridView on the UI thread
+            page.Invoke((MethodInvoker)delegate
+            {
+                UpdateQueues();
+                VisualizeMemory();
+            });
+        }
+
+
         public void VisualizeMemory()
         {
             Console.WriteLine("Memory Frames:");
