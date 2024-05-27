@@ -258,24 +258,28 @@ namespace WindowsFormsApp1
         {
             memoryManager.ClearFrames();
             sched.FCFS();
+            label1.Text = "First Come First Serve";
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             memoryManager.ClearFrames();
             sched.SJF();
+            label1.Text = "Shortest Job First";
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
             memoryManager.ClearFrames();
             sched.PRIORITY();
+            label1.Text = "Priority";
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
             memoryManager.ClearFrames();
             sched.RR();
+            label1.Text = "Round Robin";
         }
 
         private void dataGridView4_CellContentClick(object sender, DataGridViewCellEventArgs e)

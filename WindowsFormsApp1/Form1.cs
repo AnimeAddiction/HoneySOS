@@ -365,7 +365,6 @@ namespace WindowsFormsApp1
         private void CheckJobQueueProcesses()
         {
             for (int i = 0; i < dataGridView4.RowCount; i++)
-            {
                 if (dataGridView4.Rows[i].Cells[5].Value.ToString() == "Job Queue")
                 {
                     Console.WriteLine("L");
@@ -380,8 +379,10 @@ namespace WindowsFormsApp1
                         allocatedProcesses.Add(int.Parse(dataGridView4.Rows[i].Cells[0].Value.ToString()));
                         AllocateMemory(processId, memorySize);
                         Console.WriteLine("Process ID " + dataGridView4.Rows[i].Cells[0].Value.ToString() + " moved from Job Queue to Ready.");
+                        break;
                     }
                 }
+            {
             }
         }
 
