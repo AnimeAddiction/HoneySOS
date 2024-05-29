@@ -21,7 +21,7 @@ namespace WindowsFormsApp1
             InitializeDataGridView();
             InitializeDataGridView2();
             //InitializeDataGridView3();   
-            memoryManager = new MemoryManager(64, 4, this);
+            memoryManager = new MemoryManager(256, 4, this);
             sched = new Form1(dataGridView4, memoryManager);
         }
 
