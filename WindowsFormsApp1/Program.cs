@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Threading;
 using System.Windows.Forms;
+using WindowsFormsApp1;
 
-namespace WindowsFormsApp1
+public partial class Program
 {
-    internal static class Program
+    [STAThread]
+    static void Main()
     {
+
         [STAThread]
         static void Main()
         {
@@ -22,5 +25,61 @@ namespace WindowsFormsApp1
             // This is a test for the voice thing
             Application.Run(new Form1());
         }
+
+        Application.EnableVisualStyles();
+        Application.SetCompatibleTextRenderingDefault(false);
+
+        // Create and initialize the paging form
+        HoneyOS page = new HoneyOS();
+
+        // Show the paging form
+        page.Show();
+
+        // Initialize the MemoryManager with the paging form
+        MemoryManager mm = new MemoryManager(64, 4, page);
+
+        // Perform memory management operations as needed
+       // mm.AllocateMemory(1, 10);
+       // mm.VisualizeMemory();
+        //Delay(2000); // Delay for 2 seconds
+
+       // mm.AllocateMemory(2, 20);
+      //  mm.VisualizeMemory();
+      //  Delay(2000); // Delay for 2 seconds
+
+      //  mm.DeallocateMemory(1);
+      //  mm.VisualizeMemory();
+       // Delay(2000); // Delay for 2 seconds
+
+      //  mm.AllocateMemory(3, 15);
+      //  mm.VisualizeMemory();
+     //   Delay(2000); // Delay for 2 seconds
+
+      //  mm.AllocateMemory(4, 15);
+      //  mm.VisualizeMemory();
+      //  Delay(2000); // Delay for 2 seconds
+
+      //  mm.AllocateMemory(5, 15);
+       // mm.VisualizeMemory();
+       // Delay(2000); // Delay for 2 seconds
+
+       // mm.AllocateMemory(6, 15);
+       // mm.VisualizeMemory();
+      //  Delay(2000); // Delay for 2 seconds
+
+
+      //  mm.DeallocateMemory(2);
+      //  mm.VisualizeMemory();
+      //  Delay(2000); // Delay for 2 seconds
+
+        // Start the message loop on the UI thread
+        Application.Run();
+    }
+
+    // Method to introduce delay
+    static void Delay(int milliseconds)
+    {
+        Thread.Sleep(milliseconds);
+
     }
 }
