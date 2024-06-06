@@ -9,34 +9,32 @@ public partial class Program
     static void Main()
     {
 
-        [STAThread]
-        static void Main()
-        {
+     
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
             // Show the splash screen on the main UI thread
-            Splashform splashForm = new Splashform();
-            Application.Run(splashForm);
+           // Splashform splashForm = new Splashform();
+          //  Application.Run(splashForm);
 
             // After the splash screen is closed, start the main form on the main UI thread
-            //Application.Run(new desktop());
+            Application.Run(new desktop());
 
             // This is a test for the voice thing
-            Application.Run(new Form1());
-        }
+         //   Application.Run(new Form1());
+        
 
-        Application.EnableVisualStyles();
-        Application.SetCompatibleTextRenderingDefault(false);
+      //  Application.EnableVisualStyles();
+      //  Application.SetCompatibleTextRenderingDefault(false);
 
         // Create and initialize the paging form
-        HoneyOS page = new HoneyOS();
+      //  HoneyOS page = new HoneyOS();
 
         // Show the paging form
-        page.Show();
+      //  page.Show();
 
         // Initialize the MemoryManager with the paging form
-        MemoryManager mm = new MemoryManager(64, 4, page);
+       // MemoryManager mm = new MemoryManager(64, 4, page);
 
         // Perform memory management operations as needed
        // mm.AllocateMemory(1, 10);
@@ -73,7 +71,6 @@ public partial class Program
       //  Delay(2000); // Delay for 2 seconds
 
         // Start the message loop on the UI thread
-        Application.Run();
     }
 
     // Method to introduce delay

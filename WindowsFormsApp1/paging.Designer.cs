@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApp1
+﻿/*namespace WindowsFormsApp1
 {
     partial class HoneyOS
     {
@@ -365,4 +365,4 @@
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Label label1;
     }
-}
+} */

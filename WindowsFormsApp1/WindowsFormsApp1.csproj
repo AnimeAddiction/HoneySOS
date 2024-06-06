@@ -82,9 +82,7 @@
     <Compile Include="notepad.Designer.cs">
       <DependentUpon>notepad.cs</DependentUpon>
     </Compile>
-    <Compile Include="paging.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="paging.cs" />
     <Compile Include="paging.Designer.cs">
       <DependentUpon>paging.cs</DependentUpon>
     </Compile>

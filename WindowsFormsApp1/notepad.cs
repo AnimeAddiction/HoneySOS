@@ -5,10 +5,14 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Speech.Recognition;
+using System.Speech.Synthesis;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
+using System.Speech.Synthesis;
+using System.Speech.Recognition;
+using System.Runtime.Remoting.Lifetime;
 
 namespace WindowsFormsApp1
 {
@@ -16,16 +20,29 @@ namespace WindowsFormsApp1
     {
         private Point _imageLocation = new Point(13, 5);
         private Point _imgHitArea = new Point(13, 2);
-        Image closeR;
+        private Image closeR;
         private Image closeRHover;
         private bool isCloseButtonHovered = false;
         private int hoveredTabIndex = -1;
+        private ToolTip toolTip1 = new ToolTip();
+        SpeechSynthesizer s = new SpeechSynthesizer();
+
 
         public notepad()
         {
+            
+
             InitializeComponent();
             tabControl1.TabPages.RemoveAt(0);
+            // Add mouse event handlers
+            tabControl1.MouseMove += new MouseEventHandler(tabControl1_MouseMove);
+            tabControl1.MouseLeave += new EventHandler(tabControl1_MouseLeave);
         }
+
+        public void say(String h) => s.Speak(h);
+
+
+
 
         private void label1_Click(object sender, EventArgs e)
         {
@@ -51,42 +68,72 @@ namespace WindowsFormsApp1
 
 
         private void tabControl1_DrawItem(object sender, DrawItemEventArgs e)
+{
+    try
+    {
+        TabControl tc = (TabControl)sender;
+        Rectangle tabRect = tc.GetTabRect(e.Index);
+
+        // Define the close button rectangle with some padding
+        int padding = 5;
+        Rectangle closeButtonRect = new Rectangle(tabRect.Right - 20 - padding, tabRect.Top + 4, 16, 16);
+        Image img = e.Index == hoveredTabIndex ? closeRHover : closeR;
+
+        // Calculate the maximum width available for the text
+        int maxTextWidth = closeButtonRect.Left - tabRect.Left - padding;
+
+        // Get the original tab text
+        string originalText = tc.TabPages[e.Index].Text;
+        tc.TabPages[e.Index].Tag = originalText; // Store the full text in the Tag property
+        string tabText = originalText;
+
+        // Measure the text width and truncate if necessary
+        while (TextRenderer.MeasureText(tabText, tc.Font).Width > maxTextWidth)
         {
-            try
-            {
-                TabControl tc = (TabControl)sender;
-                Rectangle tabRect = tc.GetTabRect(e.Index);
-                Rectangle closeButtonRect = new Rectangle(tabRect.Right - 20, tabRect.Top + 4, 16, 16);
-                Image img = e.Index == hoveredTabIndex ? closeRHover : closeR;
+            if (tabText.Length <= 1)
+                break;
 
-                // Calculate the required width for the tab
-                int tabWidth = TextRenderer.MeasureText(tc.TabPages[e.Index].Text, tc.Font).Width + closeButtonRect.Width + 6; // Add some extra space for padding
-
-                // Adjust the width of the tab
-                tc.TabPages[e.Index].Width = tabWidth;
-
-                // Draw the tab name
-                using (Brush brush = new SolidBrush(tc.TabPages[e.Index].ForeColor))
-                {
-                    e.Graphics.DrawString(tc.TabPages[e.Index].Text, tc.Font, brush, tabRect, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
-                }
-
-                e.Graphics.DrawImage(img, closeButtonRect.Location);
-            }
-            catch
-            {
-                // Handle exceptions
-            }
+            tabText = tabText.Substring(0, tabText.Length - 1);
         }
 
+        // If truncated, add ellipsis
+        if (tabText != originalText)
+        {
+            tabText = tabText.Substring(0, tabText.Length - 3) + "...";
+        }
 
+        // Draw the tab name
+        using (Brush brush = new SolidBrush(tc.TabPages[e.Index].ForeColor))
+        {
+            Rectangle textRect = new Rectangle(tabRect.Left + padding, tabRect.Top, maxTextWidth, tabRect.Height);
+            e.Graphics.DrawString(tabText, tc.Font, brush, textRect, new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center });
+        }
+
+        // Draw the close button image
+        e.Graphics.DrawImage(img, closeButtonRect.Location);
+
+        // Update the close button hover state
+        if (closeButtonRect.Contains(tc.PointToClient(Control.MousePosition)))
+        {
+            hoveredTabIndex = e.Index;
+            img = closeRHover; // Use the hover icon
+        }
+        else if (hoveredTabIndex == e.Index)
+        {
+            hoveredTabIndex = -1;
+        }
+    }
+    catch
+    {
+        // Handle exceptions
+    }
+}
 
 
         private void tabPage1_Click(object sender, EventArgs e)
         {
 
         }
-
 
         private void tabControl1_MouseClick(object sender, MouseEventArgs e)
         {
@@ -110,6 +157,15 @@ namespace WindowsFormsApp1
             for (int i = 0; i < tc.TabCount; i++)
             {
                 Rectangle tabRect = tc.GetTabRect(i);
+                if (tabRect.Contains(e.Location))
+                {
+                    string fullText = tc.TabPages[i].Tag as string;
+                    if (!string.IsNullOrEmpty(fullText))
+                    {
+                        toolTip1.SetToolTip(tc, fullText);
+                        return;
+                    }
+                }
                 Rectangle closeButtonRect = new Rectangle(tabRect.Right - 20, tabRect.Top + 4, 16, 16);
 
                 if (closeButtonRect.Contains(e.Location))
@@ -119,19 +175,20 @@ namespace WindowsFormsApp1
                     return;
                 }
             }
+            toolTip1.SetToolTip(tc, null); // Clear the tooltip if not hovering over a tab
 
             hoveredTabIndex = -1;
             tc.Invalidate();
         }
 
-
         private void tabControl1_MouseLeave(object sender, EventArgs e)
         {
             hoveredTabIndex = -1;
             tabControl1.Invalidate();
+            toolTip1.SetToolTip(tabControl1, null); // Clear the tooltip when the mouse leaves the tab control
         }
 
-        private void button1_Click(object sender, EventArgs e) //add file
+        public void button1_Click(object sender, EventArgs e) //add file
         {
             TabPage newTabPage = new TabPage(); // Create a new tab page
             newTabPage.Text = "NewTab"; // Set the text of the tab page
@@ -140,11 +197,9 @@ namespace WindowsFormsApp1
             newTabPage.Controls.Add(richTextBox); // Add the RichTextBox to the new tab page
             tabControl1.TabPages.Add(newTabPage);
             tabControl1.SelectedTab = newTabPage;
-
-
         }
 
-        private void button2_Click(object sender, EventArgs e) //open file
+        public void button2_Click(object sender, EventArgs e) //open file
         {
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*"; // Set filter to only show .txt files
@@ -174,16 +229,18 @@ namespace WindowsFormsApp1
                 }
                 catch (Exception ex)
                 {
+                    say("Error: Could not read the file");
                     MessageBox.Show("Error: Could not read the file. Original error: " + ex.Message);
                 }
             }
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        public void button3_Click(object sender, EventArgs e)
         {
             // Check if there is a selected tab
             if (tabControl1.SelectedTab == null)
             {
+                say("No tab selected.");
                 MessageBox.Show("No tab selected.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -192,6 +249,7 @@ namespace WindowsFormsApp1
             RichTextBox richTextBox = tabControl1.SelectedTab.Controls.OfType<RichTextBox>().FirstOrDefault();
             if (richTextBox == null)
             {
+                say("No text to save in the selected tab.");
                 MessageBox.Show("No text to save in the selected tab.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -222,22 +280,23 @@ namespace WindowsFormsApp1
                     writer.Write(richTextBox.Text);
                 }
 
+                say("Changes saved successfully.");
+
                 MessageBox.Show("Changes saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
+                say($"Error: {ex.Message}");
                 MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-
-
-
-        private void button4_Click(object sender, EventArgs e)
+        public void button4_Click(object sender, EventArgs e)
         {
             // Check if there are any tabs open
             if (tabControl1.TabCount == 0)
             {
+                say("No tabs open to save.");
                 MessageBox.Show("No tabs open to save.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -249,6 +308,7 @@ namespace WindowsFormsApp1
             RichTextBox richTextBox = selectedTabPage.Controls.OfType<RichTextBox>().FirstOrDefault();
             if (richTextBox == null)
             {
+                say("No text to save in the selected tab.");
                 MessageBox.Show("No text to save in the selected tab.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -268,10 +328,15 @@ namespace WindowsFormsApp1
                         writer.Write(richTextBox.Text);
                     }
 
+                    // Update the tab text to the filename
+                    selectedTabPage.Text = Path.GetFileNameWithoutExtension(filePath);
+
+                    say("File saved successfully.");
                     MessageBox.Show("File saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)
                 {
+                    say($"Error: {ex.Message}");
                     MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
