@@ -10,12 +10,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Speech.Synthesis;
 using System.Speech.Recognition;
-
-using System.Drawing;
 using System.Drawing.Printing;
-using System.Linq;
 using System.Threading;
-using System.Windows.Forms;
 
 
 namespace WindowsFormsApp1
@@ -83,23 +79,23 @@ namespace WindowsFormsApp1
                 say("I know right?");
             }
 
-            //throw new NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }
 
-        private System.Threading.Timer timer; // Timer for periodic updates
-        private int processID = 0;
+     /*   private System.Threading.Timer timer; // Timer for periodic updates
+       private int processID = 0;
         private DateTime initialTime = DateTime.Now;
         private int schedulingPolicyNum = 0;
         private int currentRowIndex = 0;
         private int previousRowIndex = 0;
         private int timeQuantum = 1;
         private MemoryManager mem;
-        private bool touched = false;
+        private bool touched = false; */
 
 
-        public DataGridView dataGridView4;
+   /*     public DataGridView dataGridView4;
         public HoneyOS page;
         private List<int> allocatedProcesses = new List<int>();
 
@@ -111,18 +107,18 @@ namespace WindowsFormsApp1
             dataGridView4 = datagridview;
             mem = memoryManager;
 
-        }
+        } */
 
-        private void label1_Click(object sender, EventArgs e) { }
+    //    private void label1_Click(object sender, EventArgs e) { }
 
-        private void InitializeTimer()
+     /*  private void InitializeTimer()
         {
             // Create a timer that calls TimerCallback every 1000 milliseconds
             timer = new System.Threading.Timer(TimerCallback, null, 0, 1000);
-        }
+        } */
 
         // Method to add a row to the DataGridView
-        public void AddProcess()
+   /*     public void AddProcess()
         {
             if (dataGridView4.InvokeRequired)
             {
@@ -178,21 +174,21 @@ namespace WindowsFormsApp1
                         Console.WriteLine("Memory Used = " + totalMemoryUsed);
                     }
                 }**/
-            }
-        }
+     /*       }
+        } */
 
         /**public void AllocateMemory(int memory)
         {
             totalMemoryUsed += memory;
         }**/
         // Method called by the timer at regular intervals
-        private void TimerCallback(object state)
+    /*    private void TimerCallback(object state)
         {
             //AddProcess(); // Call the method to add a row
             LoopFunction();
-        }
+        } */
 
-        private void LoopFunction()
+     /*   private void LoopFunction()
         {
             timeQuantum = 1;
             if (dataGridView4.InvokeRequired)
@@ -225,9 +221,9 @@ namespace WindowsFormsApp1
                 CheckJobQueueProcesses();
                 mem.VisualizeMemory();
             }
-        }
+        } */
 
-        private void ExecuteFCFS()
+     /*   private void ExecuteFCFS()
         {
             bool processFound = false;
             for (int i = 0; i < dataGridView4.RowCount; i++)
@@ -250,35 +246,9 @@ namespace WindowsFormsApp1
                 }
                 Console.WriteLine("No process is ready to run.");
             }
-        }
+        } */
 
-        private void ExecuteSJF()
-        {
-            SortTable();
-            bool processFound = false;
-            for (int i = 0; i < dataGridView4.RowCount; i++)
-            {
-                if (dataGridView4.Rows[i].Cells[5].Value.ToString() == "Ready Queue")
-                {
-                    DecrementBurstTimeForRow(i); // Decrement the burst time
-                    HighlightCurrentRow(i);
-                    processFound = true;
-                    break;
-                }
-            }
-
-            if (!processFound)
-            {
-                // No process is ready to run
-                for (int i = 0; i < dataGridView4.Rows.Count; i++)
-                {
-                    dataGridView4.Rows[i].DefaultCellStyle.BackColor = Color.White;
-                }
-                Console.WriteLine("No process is ready to run.");
-            }
-        }
-
-        private void ExecutePriority()
+    /*    private void ExecuteSJF()
         {
             SortTable();
             bool processFound = false;
@@ -302,9 +272,35 @@ namespace WindowsFormsApp1
                 }
                 Console.WriteLine("No process is ready to run.");
             }
-        }
+        } */
 
-        private void ExecuteRoundRobin()
+    /*    private void ExecutePriority()
+        {
+            SortTable();
+            bool processFound = false;
+            for (int i = 0; i < dataGridView4.RowCount; i++)
+            {
+                if (dataGridView4.Rows[i].Cells[5].Value.ToString() == "Ready Queue")
+                {
+                    DecrementBurstTimeForRow(i); // Decrement the burst time
+                    HighlightCurrentRow(i);
+                    processFound = true;
+                    break;
+                }
+            }
+
+            if (!processFound)
+            {
+                // No process is ready to run
+                for (int i = 0; i < dataGridView4.Rows.Count; i++)
+                {
+                    dataGridView4.Rows[i].DefaultCellStyle.BackColor = Color.White;
+                }
+                Console.WriteLine("No process is ready to run.");
+            }
+        } */
+
+      /*  private void ExecuteRoundRobin()
         {
             //ResetAllStatuses();
 
@@ -336,9 +332,9 @@ namespace WindowsFormsApp1
             }
 
             dataGridView4.Invalidate();
-        }
+        } */
 
-        private void HighlightCurrentRow(int rowIndex)
+     /*   private void HighlightCurrentRow(int rowIndex)
         {
             // Clear previous selection
             for (int i = 0; i < dataGridView4.Rows.Count; i++)
@@ -354,9 +350,9 @@ namespace WindowsFormsApp1
                 //dataGridView4.Rows[rowIndex].Cells[5].Value = "Running";
             }
             AllocateMemoryIfNeeded(rowIndex);
-        }
+        } */
 
-        private void AllocateMemoryIfNeeded(int rowIndex)
+     /*   private void AllocateMemoryIfNeeded(int rowIndex)
         {
             if (rowIndex >= 0 && rowIndex < dataGridView4.RowCount)
             {
@@ -369,9 +365,9 @@ namespace WindowsFormsApp1
                     allocatedProcesses.Add(int.Parse(dataGridView4.Rows[rowIndex].Cells[0].Value.ToString()));
                 }
             }
-        }
+        } */
 
-        private bool CheckAvailableMemory(int memorySize)
+    /*    private bool CheckAvailableMemory(int memorySize)
         {
             // Check if there is enough available memory
             //Console.WriteLine("free Memory = " + (mem.totalMemory - (totalMemoryUsed + memorySize)));
@@ -384,9 +380,9 @@ namespace WindowsFormsApp1
             // Free memory when a process finishes
             totalMemoryUsed -= memorySize;
             Console.WriteLine("Freed; TotalMemoryUsed = " + totalMemoryUsed);
-        }
+        } */
 
-        private void DecrementRowBurstTime(int rowIndex)
+    /*    private void DecrementRowBurstTime(int rowIndex)
         {
             if (rowIndex < 0 || rowIndex >= dataGridView4.RowCount) return;
 
@@ -404,7 +400,7 @@ namespace WindowsFormsApp1
             {
                 Console.WriteLine("Error: " + e.Message);
             }
-        }
+        } */
         /**private void CheckJobQueueProcesses()
         {
             // Get the total memory currently used
@@ -440,7 +436,7 @@ namespace WindowsFormsApp1
             }
         }**/
 
-        private void CheckJobQueueProcesses()
+     /*   private void CheckJobQueueProcesses()
         {
             for (int i = 0; i < dataGridView4.RowCount; i++)
                 if (dataGridView4.Rows[i].Cells[5].Value.ToString() == "Job Queue")
@@ -462,9 +458,9 @@ namespace WindowsFormsApp1
                 }
             {
             }
-        }
+        } */
 
-        private int GetRemainingBurstTime(int rowIndex)
+     /*   private int GetRemainingBurstTime(int rowIndex)
         {
             if (rowIndex >= 0 && rowIndex < dataGridView4.RowCount)
             {
@@ -510,9 +506,9 @@ namespace WindowsFormsApp1
             {
                 Console.WriteLine("Error updating burst time: " + e.Message);
             }
-        }
+        } */
 
-        private void SortTable()
+    /*    private void SortTable()
         {
             List<object[]> rows = new List<object[]>();
 
@@ -541,9 +537,9 @@ namespace WindowsFormsApp1
             {
                 dataGridView4.Rows.Add(row);
             }
-        }
+        } */
 
-        private void SetRowStatus(int rowIndex, string status)
+     /*   private void SetRowStatus(int rowIndex, string status)
         {
             if (rowIndex >= 0 && rowIndex < dataGridView4.RowCount)
             {
@@ -582,9 +578,9 @@ namespace WindowsFormsApp1
             //UpdateQueues(); // Update the display of queues
             Console.WriteLine($"Process {processId} added to job queue due to insufficient memory.");
             return false;
-        }
+        } */
 
-        private void ResetAllStatuses()
+      /*  private void ResetAllStatuses()
         {
             for (int i = 0; i < dataGridView4.RowCount; i++)
             {
@@ -599,9 +595,9 @@ namespace WindowsFormsApp1
                     dataGridView4.Rows[i].Cells[5].Value = "Job Queue";
                 }
             }
-        }
+        } */
 
-        private void ClearTableData()
+     /*   private void ClearTableData()
         {
             dataGridView4.Rows.Clear();
             processID = 0;
@@ -667,9 +663,9 @@ namespace WindowsFormsApp1
         {
             Random random = new Random();
             return (random.Next(9) + 1).ToString();
-        }
+        } */
 
-        private string StatusGenerator(DataGridViewRow row)
+   /*     private string StatusGenerator(DataGridViewRow row)
         {
             int memorySize = int.Parse(row.Cells[2].Value.ToString());
 
@@ -698,7 +694,7 @@ namespace WindowsFormsApp1
 
         private void Form1_Load(object sender, EventArgs e)
         {
-        }
-    }
-}
+        } */
+ //   }
+//} 
 

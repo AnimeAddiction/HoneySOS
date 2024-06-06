@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Printing;
@@ -212,7 +212,7 @@ namespace WindowsFormsApp1
         }**/
 
 
-        private void DataGridView1_SelectionChanged(object sender, EventArgs e)
+    /*   private void DataGridView1_SelectionChanged(object sender, EventArgs e)
         {
             // Clear the selection to remove the blue color indicating an active cell
             dataGridView1.ClearSelection();
@@ -319,3 +319,4 @@ namespace WindowsFormsApp1
         public int MemorySize { get; set; }
     }
 }
+ */
