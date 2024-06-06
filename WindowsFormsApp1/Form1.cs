@@ -23,7 +23,7 @@ namespace WindowsFormsApp1
     public partial class Form1 : Form
     {
 
-        SpeechSynthesizer s = new SpeechSynthesizer();
+      /*  SpeechSynthesizer s = new SpeechSynthesizer();
         Choices list = new Choices();
         public Form1()
         {
@@ -87,7 +87,7 @@ namespace WindowsFormsApp1
         }
     }
 }
-
+      */
         private System.Threading.Timer timer; // Timer for periodic updates
         private int processID = 0;
         private DateTime initialTime = DateTime.Now;
