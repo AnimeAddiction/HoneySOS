@@ -23,7 +23,7 @@ namespace WindowsFormsApp1
         private bool isCloseButtonHovered = false;
         private int hoveredTabIndex = -1;
         SpeechSynthesizer s = new SpeechSynthesizer();
-
+        private ToolTip toolTip1 = new ToolTip();
 
         public notepad()
         {
