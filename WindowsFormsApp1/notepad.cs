@@ -22,6 +22,7 @@ namespace WindowsFormsApp1
         private Image closeRHover;
         private bool isCloseButtonHovered = false;
         private int hoveredTabIndex = -1;
+        SpeechSynthesizer s = new SpeechSynthesizer();
 
 
         public notepad()
@@ -34,6 +35,7 @@ namespace WindowsFormsApp1
             tabControl1.MouseMove += new MouseEventHandler(tabControl1_MouseMove);
             tabControl1.MouseLeave += new EventHandler(tabControl1_MouseLeave);
         }
+        public void say(String h) => s.Speak(h);
 
         private void label1_Click(object sender, EventArgs e)
         {
