@@ -285,7 +285,7 @@ namespace WindowsFormsApp1
 
 
 
-        private void button4_Click(object sender, EventArgs e)
+        public void button4_Click(object sender, EventArgs e)
         {
             // Check if there are any tabs open
             if (tabControl1.TabCount == 0)
