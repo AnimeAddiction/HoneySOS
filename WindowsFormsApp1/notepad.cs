@@ -10,9 +10,7 @@ using System.Speech.Synthesis;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Speech.Synthesis;
-using System.Speech.Recognition;
-using System.Runtime.Remoting.Lifetime;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
 
 namespace WindowsFormsApp1
 {
@@ -24,8 +22,6 @@ namespace WindowsFormsApp1
         private Image closeRHover;
         private bool isCloseButtonHovered = false;
         private int hoveredTabIndex = -1;
-        private ToolTip toolTip1 = new ToolTip();
-        SpeechSynthesizer s = new SpeechSynthesizer();
 
 
         public notepad()
@@ -38,11 +34,6 @@ namespace WindowsFormsApp1
             tabControl1.MouseMove += new MouseEventHandler(tabControl1_MouseMove);
             tabControl1.MouseLeave += new EventHandler(tabControl1_MouseLeave);
         }
-
-        public void say(String h) => s.Speak(h);
-
-
-
 
         private void label1_Click(object sender, EventArgs e)
         {
@@ -291,7 +282,10 @@ namespace WindowsFormsApp1
             }
         }
 
-        public void button4_Click(object sender, EventArgs e)
+
+
+
+        private void button4_Click(object sender, EventArgs e)
         {
             // Check if there are any tabs open
             if (tabControl1.TabCount == 0)
@@ -328,10 +322,6 @@ namespace WindowsFormsApp1
                         writer.Write(richTextBox.Text);
                     }
 
-                    // Update the tab text to the filename
-                    selectedTabPage.Text = Path.GetFileNameWithoutExtension(filePath);
-
-                    say("File saved successfully.");
                     MessageBox.Show("File saved successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)

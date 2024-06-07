@@ -81,25 +81,25 @@ namespace WindowsFormsApp1
                 say("I know right?");
             }
 
-            //throw new NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }
 
-/*   private System.Threading.Timer timer; // Timer for periodic updates
-  private int processID = 0;
-   private DateTime initialTime = DateTime.Now;
-   private int schedulingPolicyNum = 0;
-   private int currentRowIndex = 0;
-   private int previousRowIndex = 0;
-   private int timeQuantum = 1;
-   private MemoryManager mem;
-   private bool touched = false; */
+        private System.Threading.Timer timer; // Timer for periodic updates
+        private int processID = 0;
+        private DateTime initialTime = DateTime.Now;
+        private int schedulingPolicyNum = 0;
+        private int currentRowIndex = 0;
+        private int previousRowIndex = 0;
+        private int timeQuantum = 1;
+        private MemoryManager mem;
+        private bool touched = false;
 
 
-/*     public DataGridView dataGridView4;
-     public HoneyOS page;
-     private List<int> allocatedProcesses = new List<int>();
+        public DataGridView dataGridView4;
+        public HoneyOS page;
+        private List<int> allocatedProcesses = new List<int>();
 
      private int totalMemoryUsed = 0;
 
@@ -109,28 +109,28 @@ namespace WindowsFormsApp1
          dataGridView4 = datagridview;
          mem = memoryManager;
 
-     } */
+        }
 
-//    private void label1_Click(object sender, EventArgs e) { }
+        private void label1_Click(object sender, EventArgs e) { }
 
-/*  private void InitializeTimer()
-   {
-       // Create a timer that calls TimerCallback every 1000 milliseconds
-       timer = new System.Threading.Timer(TimerCallback, null, 0, 1000);
-   } */
+        private void InitializeTimer()
+        {
+            // Create a timer that calls TimerCallback every 1000 milliseconds
+            timer = new System.Threading.Timer(TimerCallback, null, 0, 1000);
+        }
 
-// Method to add a row to the DataGridView
-/*     public void AddProcess()
-     {
-         if (dataGridView4.InvokeRequired)
-         {
-             // If called from a non-UI thread, invoke on the UI thread
-             dataGridView4.Invoke(new Action(AddProcess));
-         }
-         else
-         {
-             // Add a new row to the DataGridView
-             DataGridViewRow row = new DataGridViewRow();
+        // Method to add a row to the DataGridView
+        public void AddProcess()
+        {
+            if (dataGridView4.InvokeRequired)
+            {
+                // If called from a non-UI thread, invoke on the UI thread
+                dataGridView4.Invoke(new Action(AddProcess));
+            }
+            else
+            {
+                // Add a new row to the DataGridView
+                DataGridViewRow row = new DataGridViewRow();
 
              DataGridViewCell cell1 = new DataGridViewTextBoxCell();
              cell1.Value = ProcessIdGenerator();
@@ -165,46 +165,46 @@ namespace WindowsFormsApp1
              row.Cells.Add(cell6);
              dataGridView4.Rows.Add(row);
 
-             /**if (status == "Ready")
-             {
-                 int memorySize = int.Parse(cell3.Value.ToString());
-                 if (!allocatedProcesses.Contains(int.Parse(cell1.Value.ToString())) && CheckAvailableMemory(memorySize))
-                 {
-                     // Allocate memory for the process
-                     AllocateMemory(memorySize);
-                     allocatedProcesses.Add(int.Parse(cell1.Value.ToString()));
-                     Console.WriteLine("Memory Used = " + totalMemoryUsed);
-                 }
-             }**/
-/*       }
-   } */
+                /**if (status == "Ready")
+                {
+                    int memorySize = int.Parse(cell3.Value.ToString());
+                    if (!allocatedProcesses.Contains(int.Parse(cell1.Value.ToString())) && CheckAvailableMemory(memorySize))
+                    {
+                        // Allocate memory for the process
+                        AllocateMemory(memorySize);
+                        allocatedProcesses.Add(int.Parse(cell1.Value.ToString()));
+                        Console.WriteLine("Memory Used = " + totalMemoryUsed);
+                    }
+                }**/
+            }
+        }
 
-/**public void AllocateMemory(int memory)
-{
-    totalMemoryUsed += memory;
-}**/
-// Method called by the timer at regular intervals
-/*    private void TimerCallback(object state)
-    {
-        //AddProcess(); // Call the method to add a row
-        LoopFunction();
-    } */
+        /**public void AllocateMemory(int memory)
+        {
+            totalMemoryUsed += memory;
+        }**/
+        // Method called by the timer at regular intervals
+        private void TimerCallback(object state)
+        {
+            //AddProcess(); // Call the method to add a row
+            LoopFunction();
+        }
 
-/*   private void LoopFunction()
-   {
-       timeQuantum = 1;
-       if (dataGridView4.InvokeRequired)
-       {
-           // If called from a non-UI thread, invoke on the UI thread
-           dataGridView4.Invoke(new Action(LoopFunction));
-       }
-       else
-       {
-           switch (schedulingPolicyNum)
-           {
-               case 0:
-                   ExecuteFCFS();
-                   break;
+        private void LoopFunction()
+        {
+            timeQuantum = 1;
+            if (dataGridView4.InvokeRequired)
+            {
+                // If called from a non-UI thread, invoke on the UI thread
+                dataGridView4.Invoke(new Action(LoopFunction));
+            }
+            else
+            {
+                switch (schedulingPolicyNum)
+                {
+                    case 0:
+                        ExecuteFCFS();
+                        break;
 
                case 1:
                    ExecuteSJF();
@@ -214,97 +214,97 @@ namespace WindowsFormsApp1
                    ExecutePriority();
                    break;
 
-               case 3:
-                   timeQuantum = 2;
-                   ExecuteRoundRobin();
-                   break;
-           }
-           //AddProcess();
-           CheckJobQueueProcesses();
-           mem.VisualizeMemory();
-       }
-   } */
-
-/*   private void ExecuteFCFS()
-   {
-       bool processFound = false;
-       for (int i = 0; i < dataGridView4.RowCount; i++)
-       {
-           if (dataGridView4.Rows[i].Cells[5].Value.ToString() == "Ready Queue")
-           {
-               DecrementBurstTimeForRow(i); // Decrement the burst time
-               HighlightCurrentRow(i);
-               processFound = true;
-               break;
-           }
-       }
-
-       if (!processFound)
-       {
-           // No process is ready to run
-           for (int i = 0; i < dataGridView4.Rows.Count; i++)
-           {
-               dataGridView4.Rows[i].DefaultCellStyle.BackColor = Color.White;
-           }
-           Console.WriteLine("No process is ready to run.");
-       }
-   } */
-
-/*    private void ExecuteSJF()
-    {
-        SortTable();
-        bool processFound = false;
-        for (int i = 0; i < dataGridView4.RowCount; i++)
-        {
-            if (dataGridView4.Rows[i].Cells[5].Value.ToString() == "Ready Queue")
-            {
-                DecrementBurstTimeForRow(i); // Decrement the burst time
-                HighlightCurrentRow(i);
-                processFound = true;
-                break;
+                    case 3:
+                        timeQuantum = 2;
+                        ExecuteRoundRobin();
+                        break;
+                }
+                //AddProcess();
+                CheckJobQueueProcesses();
+                mem.VisualizeMemory();
             }
         }
 
-        if (!processFound)
+        private void ExecuteFCFS()
         {
-            // No process is ready to run
-            for (int i = 0; i < dataGridView4.Rows.Count; i++)
+            bool processFound = false;
+            for (int i = 0; i < dataGridView4.RowCount; i++)
             {
-                dataGridView4.Rows[i].DefaultCellStyle.BackColor = Color.White;
+                if (dataGridView4.Rows[i].Cells[5].Value.ToString() == "Ready Queue")
+                {
+                    DecrementBurstTimeForRow(i); // Decrement the burst time
+                    HighlightCurrentRow(i);
+                    processFound = true;
+                    break;
+                }
             }
-            Console.WriteLine("No process is ready to run.");
-        }
-    } */
 
-/*    private void ExecutePriority()
-    {
-        SortTable();
-        bool processFound = false;
-        for (int i = 0; i < dataGridView4.RowCount; i++)
+            if (!processFound)
+            {
+                // No process is ready to run
+                for (int i = 0; i < dataGridView4.Rows.Count; i++)
+                {
+                    dataGridView4.Rows[i].DefaultCellStyle.BackColor = Color.White;
+                }
+                Console.WriteLine("No process is ready to run.");
+            }
+        }
+
+        private void ExecuteSJF()
         {
-            if (dataGridView4.Rows[i].Cells[5].Value.ToString() == "Ready Queue")
+            SortTable();
+            bool processFound = false;
+            for (int i = 0; i < dataGridView4.RowCount; i++)
             {
-                DecrementBurstTimeForRow(i); // Decrement the burst time
-                HighlightCurrentRow(i);
-                processFound = true;
-                break;
+                if (dataGridView4.Rows[i].Cells[5].Value.ToString() == "Ready Queue")
+                {
+                    DecrementBurstTimeForRow(i); // Decrement the burst time
+                    HighlightCurrentRow(i);
+                    processFound = true;
+                    break;
+                }
+            }
+
+            if (!processFound)
+            {
+                // No process is ready to run
+                for (int i = 0; i < dataGridView4.Rows.Count; i++)
+                {
+                    dataGridView4.Rows[i].DefaultCellStyle.BackColor = Color.White;
+                }
+                Console.WriteLine("No process is ready to run.");
             }
         }
 
-        if (!processFound)
+        private void ExecutePriority()
         {
-            // No process is ready to run
-            for (int i = 0; i < dataGridView4.Rows.Count; i++)
+            SortTable();
+            bool processFound = false;
+            for (int i = 0; i < dataGridView4.RowCount; i++)
             {
-                dataGridView4.Rows[i].DefaultCellStyle.BackColor = Color.White;
+                if (dataGridView4.Rows[i].Cells[5].Value.ToString() == "Ready Queue")
+                {
+                    DecrementBurstTimeForRow(i); // Decrement the burst time
+                    HighlightCurrentRow(i);
+                    processFound = true;
+                    break;
+                }
             }
-            Console.WriteLine("No process is ready to run.");
-        }
-    } */
 
-/*  private void ExecuteRoundRobin()
-  {
-      //ResetAllStatuses();
+            if (!processFound)
+            {
+                // No process is ready to run
+                for (int i = 0; i < dataGridView4.Rows.Count; i++)
+                {
+                    dataGridView4.Rows[i].DefaultCellStyle.BackColor = Color.White;
+                }
+                Console.WriteLine("No process is ready to run.");
+            }
+        }
+
+        private void ExecuteRoundRobin()
+        {
+            //ResetAllStatuses();
 
       int checkedRows = 0;
       while (checkedRows < dataGridView4.RowCount)
@@ -333,80 +333,80 @@ namespace WindowsFormsApp1
           checkedRows++;
       }
 
-      dataGridView4.Invalidate();
-  } */
+            dataGridView4.Invalidate();
+        }
 
-/*   private void HighlightCurrentRow(int rowIndex)
-   {
-       // Clear previous selection
-       for (int i = 0; i < dataGridView4.Rows.Count; i++)
-       {
-           dataGridView4.Rows[i].DefaultCellStyle.BackColor = Color.White;
-           //ResetAllStatuses();
-       }
+        private void HighlightCurrentRow(int rowIndex)
+        {
+            // Clear previous selection
+            for (int i = 0; i < dataGridView4.Rows.Count; i++)
+            {
+                dataGridView4.Rows[i].DefaultCellStyle.BackColor = Color.White;
+                //ResetAllStatuses();
+            }
 
-       // Highlight the current row
-       if (rowIndex >= 0 && rowIndex < dataGridView4.Rows.Count)
-       {
-           dataGridView4.Rows[rowIndex].DefaultCellStyle.BackColor = Color.LightBlue;
-           //dataGridView4.Rows[rowIndex].Cells[5].Value = "Running";
-       }
-       AllocateMemoryIfNeeded(rowIndex);
-   } */
+            // Highlight the current row
+            if (rowIndex >= 0 && rowIndex < dataGridView4.Rows.Count)
+            {
+                dataGridView4.Rows[rowIndex].DefaultCellStyle.BackColor = Color.LightBlue;
+                //dataGridView4.Rows[rowIndex].Cells[5].Value = "Running";
+            }
+            AllocateMemoryIfNeeded(rowIndex);
+        }
 
-/*   private void AllocateMemoryIfNeeded(int rowIndex)
-   {
-       if (rowIndex >= 0 && rowIndex < dataGridView4.RowCount)
-       {
-           int memorySize = int.Parse(dataGridView4.Rows[rowIndex].Cells[2].Value.ToString());
+        private void AllocateMemoryIfNeeded(int rowIndex)
+        {
+            if (rowIndex >= 0 && rowIndex < dataGridView4.RowCount)
+            {
+                int memorySize = int.Parse(dataGridView4.Rows[rowIndex].Cells[2].Value.ToString());
 
-           if (CheckAvailableMemory(memorySize))
-           {
-               // Allocate memory for the process
-               totalMemoryUsed += memorySize;
-               allocatedProcesses.Add(int.Parse(dataGridView4.Rows[rowIndex].Cells[0].Value.ToString()));
-           }
-       }
-   } */
+                if (CheckAvailableMemory(memorySize))
+                {
+                    // Allocate memory for the process
+                    totalMemoryUsed += memorySize;
+                    allocatedProcesses.Add(int.Parse(dataGridView4.Rows[rowIndex].Cells[0].Value.ToString()));
+                }
+            }
+        }
 
-/*    private bool CheckAvailableMemory(int memorySize)
-    {
-        // Check if there is enough available memory
-        //Console.WriteLine("free Memory = " + (mem.totalMemory - (totalMemoryUsed + memorySize)));
+        private bool CheckAvailableMemory(int memorySize)
+        {
+            // Check if there is enough available memory
+            //Console.WriteLine("free Memory = " + (mem.totalMemory - (totalMemoryUsed + memorySize)));
 
         return (totalMemoryUsed + memorySize) <= mem.totalMemory;
     }
 
-    private void FreeMemory(int memorySize)
-    {
-        // Free memory when a process finishes
-        totalMemoryUsed -= memorySize;
-        Console.WriteLine("Freed; TotalMemoryUsed = " + totalMemoryUsed);
-    } */
+        private void FreeMemory(int memorySize)
+        {
+            // Free memory when a process finishes
+            totalMemoryUsed -= memorySize;
+            Console.WriteLine("Freed; TotalMemoryUsed = " + totalMemoryUsed);
+        }
 
-/*    private void DecrementRowBurstTime(int rowIndex)
-    {
-        if (rowIndex < 0 || rowIndex >= dataGridView4.RowCount) return;
+        private void DecrementRowBurstTime(int rowIndex)
+        {
+            if (rowIndex < 0 || rowIndex >= dataGridView4.RowCount) return;
 
         try
         {
             int oldBurstTimeVal = int.Parse(dataGridView4.Rows[rowIndex].Cells[1].Value.ToString());
             dataGridView4.Rows[rowIndex].Cells[1].Value = oldBurstTimeVal - 1;
 
-            if (oldBurstTimeVal - 1 == 0)
+                if (oldBurstTimeVal - 1 == 0)
+                {
+                    dataGridView4.Rows.RemoveAt(rowIndex);
+                }
+            }
+            catch (IndexOutOfRangeException e)
             {
-                dataGridView4.Rows.RemoveAt(rowIndex);
+                Console.WriteLine("Error: " + e.Message);
             }
         }
-        catch (IndexOutOfRangeException e)
+        /**private void CheckJobQueueProcesses()
         {
-            Console.WriteLine("Error: " + e.Message);
-        }
-    } */
-/**private void CheckJobQueueProcesses()
-{
-    // Get the total memory currently used
-    int totalMemoryUsed = mem.CalculateTotalMemoryUsed();
+            // Get the total memory currently used
+            int totalMemoryUsed = mem.CalculateTotalMemoryUsed();
 
     // Iterate through the Job Queue processes
     foreach ((int processID, int memoryRequired, int burstTime, int priority) in mem.jobQueuee)
@@ -438,45 +438,45 @@ namespace WindowsFormsApp1
     }
 }**/
 
-/*   private void CheckJobQueueProcesses()
-   {
-       for (int i = 0; i < dataGridView4.RowCount; i++)
-           if (dataGridView4.Rows[i].Cells[5].Value.ToString() == "Job Queue")
-           {
-               Console.WriteLine("L");
-               int memorySize = int.Parse(dataGridView4.Rows[i].Cells[2].Value.ToString());
-               int processId = int.Parse(dataGridView4.Rows[i].Cells[0].Value.ToString());
+        private void CheckJobQueueProcesses()
+        {
+            for (int i = 0; i < dataGridView4.RowCount; i++)
+                if (dataGridView4.Rows[i].Cells[5].Value.ToString() == "Job Queue")
+                {
+                    Console.WriteLine("L");
+                    int memorySize = int.Parse(dataGridView4.Rows[i].Cells[2].Value.ToString());
+                    int processId = int.Parse(dataGridView4.Rows[i].Cells[0].Value.ToString());
 
-               if (memorySize <= mem.totalMemory - mem.CalculateTotalMemoryUsed())
-               {
-                   // Change status to Ready
-                   dataGridView4.Rows[i].Cells[5].Value = "Ready Queue";
-                   //AllocateMemory(memorySize); // Allocate memory for the process
-                   allocatedProcesses.Add(int.Parse(dataGridView4.Rows[i].Cells[0].Value.ToString()));
-                   AllocateMemory(processId, memorySize);
-                   Console.WriteLine("Process ID " + dataGridView4.Rows[i].Cells[0].Value.ToString() + " moved from Job Queue to Ready.");
-                   break;
-               }
-           }
-       {
-       }
-   } */
+                    if (memorySize <= mem.totalMemory - mem.CalculateTotalMemoryUsed())
+                    {
+                        // Change status to Ready
+                        dataGridView4.Rows[i].Cells[5].Value = "Ready Queue";
+                        //AllocateMemory(memorySize); // Allocate memory for the process
+                        allocatedProcesses.Add(int.Parse(dataGridView4.Rows[i].Cells[0].Value.ToString()));
+                        AllocateMemory(processId, memorySize);
+                        Console.WriteLine("Process ID " + dataGridView4.Rows[i].Cells[0].Value.ToString() + " moved from Job Queue to Ready.");
+                        break;
+                    }
+                }
+            {
+            }
+        }
 
-/*   private int GetRemainingBurstTime(int rowIndex)
-   {
-       if (rowIndex >= 0 && rowIndex < dataGridView4.RowCount)
-       {
-           try
-           {
-               return int.Parse(dataGridView4.Rows[rowIndex].Cells[1].Value.ToString());
-           }
-           catch (FormatException)
-           {
-               Console.WriteLine("Error: Unable to parse burst time.");
-           }
-       }
-       return 0;
-   }
+        private int GetRemainingBurstTime(int rowIndex)
+        {
+            if (rowIndex >= 0 && rowIndex < dataGridView4.RowCount)
+            {
+                try
+                {
+                    return int.Parse(dataGridView4.Rows[rowIndex].Cells[1].Value.ToString());
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Error: Unable to parse burst time.");
+                }
+            }
+            return 0;
+        }
 
    private void DecrementBurstTimeForRow(int rowIndex)
    {
@@ -487,32 +487,32 @@ namespace WindowsFormsApp1
            int oldBurstTimeVal = int.Parse(dataGridView4.Rows[rowIndex].Cells[1].Value.ToString());
            int newBurstTimeVal = oldBurstTimeVal - timeQuantum;
 
-           if (newBurstTimeVal <= 0)
-           {
-               int memorySize = int.Parse(dataGridView4.Rows[rowIndex].Cells[2].Value.ToString());
-               int processId = int.Parse(dataGridView4.Rows[rowIndex].Cells[0].Value.ToString());
-               //FreeMemory(memorySize);
-               dataGridView4.Rows.RemoveAt(rowIndex);
-               mem.DeallocateMemory(processId);
-               if (rowIndex <= currentRowIndex)
-               {
-                   currentRowIndex--;
-               }
-           }
-           else
-           {
-               dataGridView4.Rows[rowIndex].Cells[1].Value = newBurstTimeVal;
-           }
-       }
-       catch (Exception e)
-       {
-           Console.WriteLine("Error updating burst time: " + e.Message);
-       }
-   } */
+                if (newBurstTimeVal <= 0)
+                {
+                    int memorySize = int.Parse(dataGridView4.Rows[rowIndex].Cells[2].Value.ToString());
+                    int processId = int.Parse(dataGridView4.Rows[rowIndex].Cells[0].Value.ToString());
+                    //FreeMemory(memorySize);
+                    dataGridView4.Rows.RemoveAt(rowIndex);
+                    mem.DeallocateMemory(processId);
+                    if (rowIndex <= currentRowIndex)
+                    {
+                        currentRowIndex--;
+                    }
+                }
+                else
+                {
+                    dataGridView4.Rows[rowIndex].Cells[1].Value = newBurstTimeVal;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error updating burst time: " + e.Message);
+            }
+        }
 
-/*    private void SortTable()
-    {
-        List<object[]> rows = new List<object[]>();
+        private void SortTable()
+        {
+            List<object[]> rows = new List<object[]>();
 
         for (int i = 0; i < dataGridView4.RowCount; i++)
         {
@@ -534,22 +534,22 @@ namespace WindowsFormsApp1
                 break;
         }
 
-        dataGridView4.Rows.Clear();
-        foreach (object[] row in rows)
-        {
-            dataGridView4.Rows.Add(row);
+            dataGridView4.Rows.Clear();
+            foreach (object[] row in rows)
+            {
+                dataGridView4.Rows.Add(row);
+            }
         }
-    } */
 
-/*   private void SetRowStatus(int rowIndex, string status)
-   {
-       if (rowIndex >= 0 && rowIndex < dataGridView4.RowCount)
-       {
-           dataGridView4.Rows[rowIndex].Cells[5].Value = status;
-           HighlightCurrentRow(rowIndex);
-           dataGridView4.Invalidate();
-       }
-   }
+        private void SetRowStatus(int rowIndex, string status)
+        {
+            if (rowIndex >= 0 && rowIndex < dataGridView4.RowCount)
+            {
+                dataGridView4.Rows[rowIndex].Cells[5].Value = status;
+                HighlightCurrentRow(rowIndex);
+                dataGridView4.Invalidate();
+            }
+        }
 
    public bool AllocateMemory(int processId, int memorySize)
    {
@@ -576,34 +576,34 @@ namespace WindowsFormsApp1
            }
        }
 
-       mem.jobQueuee.Add((processId, memorySize));  // Add to job queue
-       //UpdateQueues(); // Update the display of queues
-       Console.WriteLine($"Process {processId} added to job queue due to insufficient memory.");
-       return false;
-   } */
+            mem.jobQueuee.Add((processId, memorySize));  // Add to job queue
+            //UpdateQueues(); // Update the display of queues
+            Console.WriteLine($"Process {processId} added to job queue due to insufficient memory.");
+            return false;
+        }
 
-/*  private void ResetAllStatuses()
-  {
-      for (int i = 0; i < dataGridView4.RowCount; i++)
-      {
-          int memorySize = int.Parse(dataGridView4.Rows[i].Cells[2].Value.ToString());
+        private void ResetAllStatuses()
+        {
+            for (int i = 0; i < dataGridView4.RowCount; i++)
+            {
+                int memorySize = int.Parse(dataGridView4.Rows[i].Cells[2].Value.ToString());
 
-          if (mem.CheckAvailableMemory(memorySize))
-          {
-              dataGridView4.Rows[i].Cells[5].Value = "Ready Queue";
-          }
-          else
-          {
-              dataGridView4.Rows[i].Cells[5].Value = "Job Queue";
-          }
-      }
-  } */
+                if (mem.CheckAvailableMemory(memorySize))
+                {
+                    dataGridView4.Rows[i].Cells[5].Value = "Ready Queue";
+                }
+                else
+                {
+                    dataGridView4.Rows[i].Cells[5].Value = "Job Queue";
+                }
+            }
+        }
 
-/*   private void ClearTableData()
-   {
-       dataGridView4.Rows.Clear();
-       processID = 0;
-   }
+        private void ClearTableData()
+        {
+            dataGridView4.Rows.Clear();
+            processID = 0;
+        }
 
    private void button1_Click_1(object sender, EventArgs e)
    {
@@ -661,15 +661,15 @@ namespace WindowsFormsApp1
        return ((int)timePassed.TotalSeconds).ToString();
    }
 
-   private string PriorityGenerator()
-   {
-       Random random = new Random();
-       return (random.Next(9) + 1).ToString();
-   } */
+        private string PriorityGenerator()
+        {
+            Random random = new Random();
+            return (random.Next(9) + 1).ToString();
+        }
 
-/*     private string StatusGenerator(DataGridViewRow row)
-     {
-         int memorySize = int.Parse(row.Cells[2].Value.ToString());
+        private string StatusGenerator(DataGridViewRow row)
+        {
+            int memorySize = int.Parse(row.Cells[2].Value.ToString());
 
          if (CheckAvailableMemory(memorySize))
          {
@@ -694,9 +694,9 @@ namespace WindowsFormsApp1
 
      }
 
-     private void Form1_Load(object sender, EventArgs e)
-     {
-     } */
-//   }
-//} 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+        }
+    }
+}
 
